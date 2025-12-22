@@ -1,0 +1,69 @@
+{% load i18n static admin_list jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
+<div class="col-12 pb-4" id="change-list-filters">
+    <form id="changelist-search" method="GET">
+        <div class="row">
+            {% block filters %}
+                {% if cl.has_filters %}
+                    {% for spec in cl.filter_specs %}
+                        <div class="col-12 col-md-auto mb-2">
+                             {% jazzmin_list_filter cl spec %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endblock %}
+        </div>
+        
+        <div class="row mt-2">
+             {% if cl.search_fields %}
+                <div class="col-12 col-md-auto mb-2 flex-grow-1">
+                    <input class="form-control w-100" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar"
+                           {% if cl.search_help_text %} placeholder="{{ cl.search_help_text }}" aria-label="{{ cl.search_help_text }}"{% endif %}>
+                </div>
+            {% endif %}
+
+            {% if cl.has_filters or cl.search_fields %}
+                <div class="col-12 col-md-auto mb-2" id="search_group">
+                    <button type="submit" class="btn btn-block btn-md-inline {{ jazzmin_ui.button_classes.primary }} w-100 w-md-auto">{% trans 'Search' %}</button>
+                    {% if show_result_count %}
+                        <span class="small quiet d-block mt-1">
+                            {% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %}
+                            (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">
+                                {% if cl.show_full_result_count %}
+                                    {% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktrans %}
+                                {% else %}
+                                    {% trans "Show all" %}
+                                {% endif %}
+                            </a>)
+                        </span>
+                    {% endif %}
+                    {% admin_extra_filters cl as extra_filters %}
+                    {% for pair in extra_filters.items %}
+                        {% if pair.0 != search_var %}<input type="hidden" name="{{ pair.0 }}" value="{{ pair.1 }}">{% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Custom Responsive Tweaks */
+    @media (max-width: 768px) {
+        .select2-container {
+            width: 100% !important;
+        }
+        #change-list-filters input[type="text"] {
+            width: 100%;
+        }
+    }
+    .w-md-auto {
+        width: auto !important;
+    }
+    @media (max-width: 767.98px) {
+        .w-md-auto {
+            width: 100% !important;
+        }
+    }
+</style>

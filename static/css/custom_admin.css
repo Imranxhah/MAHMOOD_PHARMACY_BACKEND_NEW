@@ -1,0 +1,789 @@
+/* Hide Jazzmin Version in Footer */
+.main-footer .float-right {
+    display: none !important;
+}
+
+/* Ensure Logo/Brand text is styled if needed */
+.brand-link .brand-text {
+    font-weight: bold !important;
+}
+
+/* Hide the logo image completely - Aggressive Overrides */
+.brand-link img,
+.brand-image,
+.brand-image-xl,
+.brand-image-xs,
+img[src*="logo"],
+.img-circle.elevation-3 {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+}
+
+/* Hide User Avatar in Sidebar */
+.user-panel .image {
+    display: none !important;
+}
+
+/* Fix alignment when logo is missing */
+.brand-link {
+    text-align: center;
+}
+
+.brand-link .brand-text {
+    margin-left: 0 !important;
+}
+
+/* Hide login page logo specifically */
+.login-logo,
+.login-box-msg+.login-logo {
+    display: none !important;
+}
+
+/* 
+   Fix for filter_horizontal widget width in Jazzmin.
+*/
+.selector {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+}
+
+.selector .selector-available,
+.selector .selector-chosen {
+    width: 48% !important;
+    flex-grow: 1 !important;
+    min-width: 400px;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.selector select {
+    width: 100% !important;
+    min-height: 500px !important;
+    height: 500px !important;
+    overflow-x: auto !important;
+}
+
+.selector .selector-chooser {
+    width: 60px !important;
+    min-width: 60px !important;
+    flex-shrink: 0 !important;
+    margin: 0 10px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    text-align: center !important;
+    transform: translateY(20px);
+}
+
+.selector .selector-chooser li {
+    margin: 5px 0 !important;
+}
+
+.selector .selector-filter {
+    width: 100% !important;
+    margin-bottom: 5px !important;
+}
+
+.selector .selector-filter input {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.form-row {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.form-row .field-permissions {
+    width: 100% !important;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    width: 100%;
+}
+
+/* -------------------------------------------------------------------------- */
+/*             MODERN TABLE DESIGN (Card & Clean Look)                       */
+/* -------------------------------------------------------------------------- */
+
+/* 1. Card Container Enhancements */
+.card {
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden;
+    /* For rounded corners */
+}
+
+/* 2. Table Header Styling */
+#result_list thead th {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    text-transform: uppercase !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    padding: 15px 20px !important;
+    border-bottom: 2px solid #e9ecef !important;
+    vertical-align: middle !important;
+}
+
+#result_list thead th.sorted {
+    background-color: #e9ecef !important;
+    /* Slightly darker for sorted col */
+}
+
+/* 3. Table Body Styling */
+#result_list tbody td,
+#result_list tbody th {
+    padding: 15px 20px !important;
+    /* More breathing room */
+    vertical-align: middle !important;
+    border-top: 1px solid #f1f3f5 !important;
+    color: #495057 !important;
+    font-size: 0.9rem !important;
+}
+
+/* Row Hover Effect */
+#result_list tbody tr:hover {
+    background-color: #fafafa !important;
+    transform: scale(1.001);
+    /* Subtle visual trigger */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    z-index: 10;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* 4. Link Styling in Tables */
+#result_list tbody tr th a,
+#result_list tbody tr td a {
+    color: #2c3e50 !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    transition: color 0.1s;
+}
+
+#result_list tbody tr th a:hover,
+#result_list tbody tr td a:hover {
+    color: #007bff !important;
+}
+
+/* 5. Modernize Input/Selects inside tables (e.g., Status Dropdowns) */
+#result_list select,
+#result_list input[type="text"],
+#result_list input[type="number"] {
+    border: 1px solid #dee2e6 !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    font-size: 0.85rem !important;
+    background-color: white !important;
+    transition: all 0.2s;
+    height: auto !important;
+}
+
+#result_list select:focus,
+#result_list input:focus {
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .15) !important;
+    outline: none;
+}
+
+#result_list tbody tr th a:hover,
+#result_list tbody tr td a:hover {
+    color: #212529 !important;
+    text-decoration: none !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/*             MODERN ADMIN TOOLBAR & DROPDOWNS (SELECT2)                    */
+/* -------------------------------------------------------------------------- */
+
+/* 1. Container spacing and layout */
+#changelist-form .actions {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #e9ecef;
+}
+
+/* 2. Style the Action Dropdowns & Buttons */
+#changelist-form .actions select {
+    height: 38px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    padding-left: 10px;
+    min-width: 200px;
+    font-size: 0.8rem;
+}
+
+#changelist-form .actions button {
+    height: 38px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+#changelist-form .actions button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 3. Style the Counter (0 of X selected) */
+#changelist-form .actions .action-counter {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+/* 4. Search Bar Area */
+#toolbar {
+    background: transparent !important;
+    border: none !important;
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+#toolbar form input[type='text'] {
+    height: 40px;
+    border-radius: 20px !important;
+    border: 1px solid #ced4da;
+    padding-left: 20px;
+    width: 300px;
+    transition: width 0.3s;
+}
+
+#toolbar form input[type='text']:focus {
+    width: 400px;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+#toolbar form input[type='submit'] {
+    background-color: #28a745 !important;
+    border-radius: 20px !important;
+    padding: 0 20px !important;
+    height: 40px !important;
+    margin-left: 10px;
+}
+
+/* 5. SELECT2 DROPDOWN MODERNIZATION */
+.select2-container .select2-selection--single {
+    height: 38px !important;
+    border-radius: 4px !important;
+    border: 1px solid #ced4da !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px !important;
+    border-radius: 0 4px 4px 0 !important;
+}
+
+.select2-dropdown {
+    border: 1px solid #ced4da !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.select2-search__field {
+    border-radius: 4px !important;
+    border: 1px solid #ced4da !important;
+    padding: 8px !important;
+}
+
+.select2-results__option {
+    padding: 8px 12px !important;
+    font-size: 0.9rem !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #007bff !important;
+}
+
+/* --- FILTER MENU IMPROVEMENTS --- */
+/* (Prefix removed as requested titles are now explicit) */
+
+/* Style the Filter Dropdowns (select elements in actions) */
+#changelist-form .actions select {
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-radius: 20px;
+    /* Pillow shape */
+    padding: 5px 30px 5px 15px;
+    /* Extra padding for arrow */
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: #495057;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    appearance: none;
+    /* Hide default arrow */
+    -webkit-appearance: none;
+    transition: all 0.2s;
+    min-width: 140px;
+}
+
+#changelist-form .actions select:hover {
+    border-color: #adb5bd;
+    background-color: #f8f9fa;
+}
+
+#changelist-form .actions select:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+/* Add a descriptive empty option placeholder style if possible 
+   (Requires JS to inject 'Select Status' text if value is empty, 
+   but CSS can style the first option if it is selected) 
+*/
+#changelist-form .actions select option:first-child {
+    color: #adb5bd;
+    font-style: italic;
+}
+
+/* Style the 'Go' or 'Search' button next to filters */
+#changelist-form .actions button {
+    background-color: #007bff;
+    color: white;
+    border-radius: 20px;
+    padding: 0 25px;
+    margin-left: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Mobile adjustments for these new styles */
+@media (max-width: 768px) {
+    #changelist-form .actions::before {
+        display: block;
+        margin-bottom: 5px;
+        width: 100%;
+    }
+}
+
+#changelist-search form,
+#toolbar form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+/* -------------------------------------------------------------------------- */
+/*             MOBILE RESPONSIVENESS FIXES (Jazmin/AdminLTE)                 */
+/* -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    /* 1. Reduce Main Content Spacing */
+    .content-wrapper>.content {
+        padding: 5px !important;
+        /* Was larger */
+    }
+
+    .container-fluid {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    /* 2. Compact Header */
+    .content-header {
+        padding: 8px 5px !important;
+    }
+
+    .content-header h1 {
+        font-size: 1.25rem !important;
+    }
+
+    /* 3. Optimize Cards to use full width */
+    .card {
+        margin-bottom: 10px !important;
+        box-shadow: none !important;
+        /* Optional: cleaner look on mobile */
+    }
+
+    .card-body {
+        padding: 10px !important;
+        /* Reduce specific internal padding */
+    }
+
+    /* 4. Fix Action Toolbar (The grey box with 'Go' button) */
+    #changelist-form .actions {
+        flex-direction: column;
+        /* Stack items vertically */
+        align-items: stretch;
+        gap: 8px;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    #changelist-form .actions select {
+        width: 100%;
+        min-width: 0;
+        /* Allow shrinking */
+        margin: 0 !important;
+    }
+
+    #changelist-form .actions button {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .actions .action-counter {
+        display: none !important;
+        /* Hide '0 of X selected' to save space */
+    }
+
+    /* 5. Optimize Search Bar */
+    #toolbar form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #toolbar form input[type='text'] {
+        width: 100% !important;
+        margin-bottom: 10px;
+        transition: none;
+        /* Disable animation for performance */
+    }
+
+    #toolbar form input[type='submit'] {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    /* 6. Fix filter widgets (Date hierarchy etc) */
+    .filter-item {
+        margin-right: 0;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* 7. Ensure horizontally scrolling tables */
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* 8. Hide less critical elements or spacing */
+    .brand-link {
+        padding: 0.5rem !important;
+    }
+
+    /* Fix login box width on mobile */
+    .login-box,
+    .register-box {
+        width: 90% !important;
+        margin-top: 20px;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/*             CHANGE FORM MOBILE OPTIMIZATIONS                               */
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 991px) {
+
+    /* 1. Make the main form container clean */
+    #content-main form .module {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+        border: 1px solid #e9ecef;
+        padding-bottom: 0 !important;
+    }
+
+    /* 2. Field Rows */
+    .form-row {
+        padding: 15px;
+        border-bottom: 1px solid #f1f3f5;
+        display: flex;
+        flex-direction: column;
+        width: 100% !important;
+    }
+
+    .form-row .fieldBox {
+        width: 100% !important;
+        float: none !important;
+        margin-right: 0 !important;
+    }
+
+    .form-row:last-child {
+        border-bottom: none;
+    }
+
+    /* Labels */
+    .form-row label {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #343a40;
+        padding-left: 0;
+        float: none;
+        display: block;
+    }
+
+    /* Inputs & Selects - FORCE FULL WIDTH */
+    .form-row input,
+    .form-row select,
+    .form-row textarea,
+    .select2-container,
+    .select2-selection,
+    .vTextField,
+    .vIntegerField,
+    .vURLField,
+    .readonly {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+    }
+
+    .form-row input[type="text"],
+    .form-row input[type="number"],
+    .form-row input[type="email"],
+    .form-row input[type="password"],
+    .form-row input[type="url"],
+    .form-row select,
+    .form-row textarea,
+    .select2-selection--single {
+        height: 45px !important;
+        /* Touch friendly & Consistent Height */
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+    }
+
+    .form-row textarea {
+        height: auto !important;
+        min-height: 100px;
+    }
+
+    /* Select2 Specific Fixes */
+    .select2-container {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    .select2-selection--single {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 43px !important;
+        top: 1px !important;
+    }
+
+    /* Readonly Fields */
+    .form-row .readonly {
+        padding: 10px;
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+        min-height: 45px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* 3. Submit Row (Bottom Actions) */
+    .submit-row {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: sticky;
+        bottom: 0;
+        z-index: 1000;
+        border-top: 1px solid #dee2e6;
+        margin-top: 20px;
+        float: none !important;
+        width: 100% !important;
+    }
+
+    .submit-row input,
+    .submit-row a.deletelink {
+        width: 100%;
+        height: 48px;
+        margin: 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        float: none !important;
+    }
+
+    .submit-row p.deletelink-box {
+        margin: 0;
+        float: none !important;
+    }
+
+    /* Hide the "History" button if it's just clutter on mobile */
+    .object-tools {
+        display: none;
+    }
+
+    /* Related Widget Wrapper (add button, eye) - Buttonize them */
+    .related-widget-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 8px;
+        align-items: center;
+        margin-top: 5px;
+    }
+
+    .related-widget-wrapper>a {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        margin: 0;
+        transition: background-color 0.2s;
+    }
+
+    .related-widget-wrapper>a:hover,
+    .related-widget-wrapper>a:active {
+        background-color: #e9ecef;
+    }
+
+    .related-widget-wrapper>a img {
+        /* If icons are images, center them. Font icons usually center fine with flex */
+        width: 20px;
+        height: 20px;
+        opacity: 0.7;
+    }
+
+    /* Tabs (Nav-Pills / Nav-Tabs) Horizontal Scroll */
+    .nav-tabs,
+    .nav-pills {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+        display: none;
+        /* Chrome/Safari */
+    }
+
+    .nav-tabs .nav-item {
+        flex: 0 0 auto;
+    }
+
+    .nav-tabs .nav-link {
+        white-space: nowrap;
+        padding: 10px 15px;
+        font-size: 0.95rem;
+    }
+
+    /* 4. FORCE FULL WIDTH FOR CONTENT CONTAINERS (Fix "Squeezed" look) */
+    .col-12,
+    .col-md-9,
+    .col-lg-10,
+    .col-sm-12 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    #content-main {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* Remove any sidebar spacing if present */
+    .content-wrapper,
+    .main-footer,
+    .main-header {
+        margin-left: 0 !important;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/*             AGGRESSIVE INPUT WIDTH OVERRIDES (ID Specificity)             */
+/* -------------------------------------------------------------------------- */
+@media (max-width: 991px) {
+
+    #content-main .form-row input,
+    #content-main .form-row select,
+    #content-main .form-row textarea,
+    #content-main .select2-container,
+    #content-main .select2-selection,
+    #content-main .vTextField,
+    #content-main .vIntegerField,
+    #content-main .vURLField,
+    #content-main .readonly,
+    #content-main .related-widget-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        box-sizing: border-box !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Ensure Select2 specifically behaves */
+    #content-main .select2-container {
+        display: block !important;
+    }
+
+    /* Force related widget wrapper to wrap so inputs take full line */
+    #content-main .related-widget-wrapper {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+}

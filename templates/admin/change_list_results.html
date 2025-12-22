@@ -1,0 +1,157 @@
+{% load i18n static jazzmin %}
+
+{% if result_hidden_fields %}
+<div class="hiddenfields">
+    {% for item in result_hidden_fields %}{{ item }}{% endfor %}
+</div>
+{% endif %}
+
+{% if results %}
+    <style>
+        /* Add hover effect to rows to indicate they are clickable */
+        table#result_list tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        table#result_list tbody tr:hover {
+            background-color: rgba(0,0,0,0.05) !important;
+        }
+
+        /* Generic Mobile Card View for ALL Admin Lists */
+        @media (max-width: 991px) {
+            #result_list, 
+            #result_list tbody, 
+            #result_list tr {
+                display: block;
+                width: 100%;
+            }
+            
+            #result_list thead { display: none; }
+            
+            #result_list tr {
+                margin-bottom: 1rem;
+                background: #fff;
+                border: 1px solid #dcdcdc;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                padding: 0;
+                overflow: hidden;
+            }
+
+            #result_list td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: none;
+                border-bottom: 1px solid #eee;
+                padding: 12px 15px;
+                text-align: right;
+                min-height: 45px;
+            }
+
+            #result_list td:last-child {
+                border-bottom: none;
+            }
+
+            #result_list td img {
+                margin: 0;
+            }
+
+            /* Labels injected via JS */
+            #result_list td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #555;
+                text-align: left;
+                padding-right: 15px;
+                flex-shrink: 0;
+                text-transform: capitalize;
+            }
+
+            /* Hide action checkbox label */
+            #result_list td.action-checkbox {
+                background: #f8f9fa;
+                justify-content: center;
+            }
+            #result_list td.action-checkbox::before { display: none; }
+        }
+    </style>
+
+    <div class="card">
+        <div class="card-body table-responsive p-0">
+            <table id="result_list" class="table table-striped">
+                <thead>
+                    <tr>
+                        {% for header in result_headers %}
+                        <th class="{% header_class header forloop %}" tabindex="0" rowspan="1" colspan="1">
+                            <div class="text">
+                                {% if header.sortable %}
+                                    <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>
+                                {% else %}
+                                    <span>{{ header.text|capfirst }}</span>
+                                {% endif %}
+                                {% if header.sorted %}
+                                    <a href="{{ header.url_remove }}">
+                                        <div style="margin-top: .2em;" class="fa fa-times float-right"> </div>
+                                    </a>
+                                    {% if header.ascending %}
+                                        <i style="margin-top: .2em;" class="fa fa-sort-alpha-down"> </i>
+                                    {% else %}
+                                        <i style="margin-top: .2em;" class="fa fa-sort-alpha-up"> </i>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr role="row" class="{% cycle 'even' 'odd' %} clickable-row">
+                        {% for item in result %}{{ item }}{% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Existing Row Click Logic
+            const rows = document.querySelectorAll("tr.clickable-row");
+            rows.forEach(row => {
+                row.addEventListener("click", function(e) {
+                    const targetTag = e.target.tagName.toLowerCase();
+                    if (['input', 'select', 'button', 'textarea', 'label'].includes(targetTag) || e.target.closest('a') || e.target.closest('.action-checkbox')) {
+                        return;
+                    }
+                    const link = row.querySelector('th.field-__str__ a') || 
+                                 row.querySelector('th a') || 
+                                 row.querySelector('td.field-__str__ a') || 
+                                 row.querySelector('td a');
+
+                    if (link && link.href) {
+                        window.location.href = link.href;
+                    }
+                });
+            });
+
+            // NEW: Inject Header Labels for Mobile View
+            const table = document.getElementById('result_list');
+            if (table) {
+                const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent.trim());
+                const bodyRows = table.querySelectorAll('tbody tr');
+                
+                bodyRows.forEach(row => {
+                    const cells = row.querySelectorAll('td, th');
+                    cells.forEach((cell, index) => {
+                        if (headers[index] && headers[index] !== "") {
+                            cell.setAttribute('data-label', headers[index]);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+{% endif %}

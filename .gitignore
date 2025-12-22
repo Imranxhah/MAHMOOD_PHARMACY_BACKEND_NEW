@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Flask / Generic
+instance/
+.webassets-cache
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project Specific / Secrets
+serviceAccountKey.json
+*.pem
+*.key
+
+# Temporary / Debug Files
+test_output.txt
+verify_result.txt
+token_count.txt
+temp_change_list.html
+notification_debug.log
+check_tokens.py
+read_result.py
+test_*.py
+!tests/test_*.py
+
+# Documentation / Prompts (Optional, remove if these should be tracked)
+prompt.txt
+*.md
+!README.md
+!requirements.md
