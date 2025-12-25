@@ -30,7 +30,7 @@ class User(AbstractUser):
     otp_attempts = models.IntegerField(default=0)
     
     # FCM Token
-    fcm_token = models.CharField(max_length=255, blank=True, null=True, help_text="Firebase Cloud Messaging Token for Push Notifications")
+    fcm_token = models.CharField(max_length=2048, blank=True, null=True, help_text="Firebase Cloud Messaging Token for Push Notifications")
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

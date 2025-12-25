@@ -109,3 +109,4 @@ class AuthTests(TestCase):
         self.user_data['password'] = '123'
         response = self.client.post(self.register_url, self.user_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+

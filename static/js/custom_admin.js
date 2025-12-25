@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     el.style.setProperty('width', '100%', 'important');
                 }
             });
+
+
         }
     }
 

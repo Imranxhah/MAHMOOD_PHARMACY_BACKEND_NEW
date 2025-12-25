@@ -82,10 +82,18 @@ def send_broadcast_push(sender, instance, created, **kwargs):
     if created:
         logger.info(f"BroadcastNotification created: {instance.title}")
         try:
+            # Create message with High Priority config
             message = messaging.Message(
                 notification=messaging.Notification(
                     title=instance.title, 
                     body=instance.body
+                ),
+                android=messaging.AndroidConfig(
+                    priority='high',
+                    notification=messaging.AndroidNotification(
+                        channel_id='high_importance_channel',
+                        icon='@mipmap/ic_launcher',
+                    ),
                 ),
                 topic='all_users',
             )
@@ -101,7 +109,8 @@ def send_broadcast_push(sender, instance, created, **kwargs):
                 Notification(
                     user=user, 
                     title=instance.title, 
-                    body=instance.body
+                    body=instance.body,
+                    # Optional: link unrelated to order
                 ) for user in users
             ]
             
