@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Sales Report</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <script>
+        // Immediately check theme prevents flash
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-slate-800 transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm transition-colors duration-300 dark:bg-slate-800 dark:border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Brand -->
+                <div class="flex items-center gap-3">
+                    <a href="{% url 'sales_report' %}" class="flex items-center gap-2 text-xl font-bold text-teal-600 dark:text-teal-400">
+                        <i class="fa-solid fa-file-invoice-dollar text-2xl"></i>
+                        <span>Sales Report</span>
+                    </a>
+                </div>
+
+                <!-- Links and Actions -->
+                <div class="flex items-center gap-6">
+                    <a href="{% url 'admin-charts' %}" class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors dark:text-slate-400 dark:hover:text-teal-400">
+                        <i class="fa-solid fa-chart-line mr-1"></i> Dashboard
+                    </a>
+                    <a href="{% url 'admin:index' %}" class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors dark:text-slate-400 dark:hover:text-teal-400">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Admin
+                    </a>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-full text-slate-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-slate-400 dark:hover:bg-slate-700" title="Toggle Dark Mode">
+                        <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon text-lg"></i>
+                        <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun text-lg"></i>
+                    </button>
+                    
+                    <div class="hidden sm:flex items-center gap-3 border-l border-gray-300 pl-6 dark:border-slate-600">
+                        <div class="text-right">
+                            <p class="text-xs font-semibold text-slate-900 dark:text-white">Admin User</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Logged in</p>
+                        </div>
+                        <div class="h-8 w-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold dark:bg-teal-900 dark:text-teal-300">
+                            A
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Header -->
+        <div class="mb-10 border-b border-gray-200 pb-5 dark:border-slate-700">
+            <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+                Generate <span class="text-teal-600 dark:text-teal-400">PDF Report</span>
+            </h1>
+            <p class="mt-2 text-lg text-slate-600 dark:text-slate-400">
+                Select filters below to generate a detailed sales report.
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden">
+            <div class="p-8">
+                <form method="post" class="space-y-6" id="salesReportForm">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Date Range -->
+                        <div class="col-span-1 md:col-span-2">
+                             <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-4 border-b dark:border-slate-700 pb-2">Time Period</h3>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="{{ form.start_date.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.start_date.label }}</label>
+                                    {{ form.start_date }}
+                                    {% if form.start_date.errors %}
+                                        <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ form.start_date.errors.0 }}</p>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <label for="{{ form.end_date.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.end_date.label }}</label>
+                                    {{ form.end_date }}
+                                    {% if form.end_date.errors %}
+                                        <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ form.end_date.errors.0 }}</p>
+                                    {% endif %}
+                                </div>
+                             </div>
+                        </div>
+
+                        <!-- Filters -->
+                         <div class="col-span-1 md:col-span-2 mt-2">
+                            <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-4 border-b dark:border-slate-700 pb-2">Filters</h3>
+                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label for="{{ form.branch.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.branch.label }}</label>
+                                    {{ form.branch }}
+                                </div>
+                                <div>
+                                    <label for="{{ form.category.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.category.label }}</label>
+                                    {{ form.category }}
+                                </div>
+                                <div>
+                                    <label for="{{ form.product.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.product.label }}</label>
+                                    {{ form.product }}
+                                    {% if form.product.help_text %}
+                                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.product.help_text }}</p>
+                                    {% endif %}
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex justify-end pt-6">
+                         <button type="submit" class="text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800">
+                            <i class="fa-solid fa-file-pdf mr-2"></i>
+                            Generate Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Dark Mode Script -->
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Update icons based on current state (class added in head)
+        if (document.documentElement.classList.contains('dark')) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            // Toggle icons
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // If is dark
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+
+        // Add unique timestamp to form action to prevent IDM caching/duplication
+        document.getElementById('salesReportForm').addEventListener('submit', function(e) {
+            const timestamp = new Date().getTime();
+            this.action = window.location.pathname + '?v=' + timestamp;
+        });
+    </script>
+</body>
+</html>

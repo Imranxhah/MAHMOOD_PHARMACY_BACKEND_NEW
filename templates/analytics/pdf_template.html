@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <title>Sales Report</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+            @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                font-family: 'Times New Roman', serif; /* Changed font style as requested to fix/differentiate */
+                font-size: 10pt;
+                color: #2c3e50;
+                font-style: italic;
+            }
+        }
+
+        body {
+            font-family: 'Helvetica', sans-serif;
+            color: #2c3e50;
+            font-size: 10pt;
+            line-height: 1.5;
+        }
+
+        /* --- UTILS --- */
+        .page-break { page-break-before: always; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        
+        /* --- TITLE PAGE STYLES (Copied from Visual Report) --- */
+        .title-page-container {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 10px solid #27ae60;
+            padding: 40px;
+            background-color: #ffffff;
+            box-sizing: border-box;
+        }
+        
+        .logo-large {
+            width: 250px;
+            margin-bottom: 40px;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-size: 36pt;
+            font-weight: bold;
+            color: #27ae60;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .report-subtitle {
+            font-size: 24pt;
+            color: #34495e;
+            font-weight: 300;
+            margin-bottom: 60px;
+            border-bottom: 3px solid #f39c12;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .report-meta-box {
+            background-color: #f9f9f9;
+            padding: 30px;
+            width: 80%;
+            text-align: center;
+            margin: 0 auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .meta-label {
+            display: block;
+            font-size: 10pt;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .meta-value {
+            display: block;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        .meta-value:last-child {
+            margin-bottom: 0;
+        }
+        
+        .footer-note {
+            margin-top: auto;
+            font-size: 10pt;
+            color: #95a5a6;
+        }
+
+        /* --- TABLE STYLES --- */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 30px;
+        }
+
+        th {
+            background-color: #27ae60;
+            color: white;
+            font-weight: bold;
+            padding: 12px 15px;
+            text-align: left;
+            text-transform: uppercase;
+            font-size: 9pt;
+        }
+
+        th:first-child { border-top-left-radius: 10px; }
+        th:last-child { border-top-right-radius: 10px; }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+            color: #333;
+        }
+
+        tbody tr:nth-child(even) { background-color: #f2f6f4; }
+
+        .badge {
+            background-color: #e8f5e9;
+            color: #27ae60;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 8pt;
+            font-weight: bold;
+        }
+
+        /* --- TOTALS --- */
+        .total-section {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .total-box {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TITLE PAGE -->
+    <div class="title-page-container">
+        <img src="{% static 'img/company_logo.png' %}" class="logo-large">
+        
+        <div class="company-name">Mahmood Pharmacy</div>
+        <div class="report-subtitle">Sales Performance Report</div>
+        
+        <div class="report-meta-box">
+            <span class="meta-label">Reporting Period</span>
+            <span class="meta-value">{{ start_date }} &nbsp;—&nbsp; {{ end_date }}</span>
+            
+            <span class="meta-label">Generated On</span>
+            <span class="meta-value">{% now "F j, Y  |  H:i A" %}</span>
+            
+            <span class="meta-label">Filters Applied</span>
+            <span class="meta-value" style="font-size: 12pt;">
+                Branch: {{ branch }} <br>
+                Category: {{ category }} <br>
+                Product: {{ product }}
+            </span>
+        </div>
+
+        <div class="footer-note">
+            CONFIDENTIAL &bull; INTERNAL USE ONLY
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- REPORT CONTENT -->
+    <div style="margin-bottom: 20px;">
+        <h2 style="color: #27ae60; border-bottom: 2px solid #27ae60; padding-bottom: 10px;">Detailed Sales Data</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 10%;">Order ID</th>
+                <th style="width: 12%;">Date</th>
+                <th style="width: 15%;">Branch</th>
+                <th style="width: 25%;">Product</th>
+                <th class="text-center" style="width: 8%;">Qty</th>
+                <th class="text-right" style="width: 15%;">Unit Price</th>
+                <th class="text-right" style="width: 15%;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><span class="badge">#{{ item.order.id }}</span></td>
+                <td>{{ item.order.created_at|date:"d M, Y" }}</td>
+                <td>{{ item.order.branch.name|default:"—" }}</td>
+                <td>
+                    <div style="font-weight: bold;">{{ item.product.name }}</div>
+                    <div style="font-size: 8pt; color: #7f8c8d;">{{ item.product.category.name }}</div>
+                </td>
+                <td class="text-center">{{ item.quantity }}</td>
+                <td class="text-right">{{ item.price_at_purchase }}</td>
+                <td class="text-right">{{ item.total_price }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center" style="padding: 30px; color: #999;">
+                    No sales data found for these filters.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total-section">
+        <span style="font-weight: bold; margin-right: 15px; font-size: 11pt;">GRAND TOTAL:</span>
+        <div class="total-box">{{ total_revenue }}</div>
+    </div>
+
+</body>
+</html>

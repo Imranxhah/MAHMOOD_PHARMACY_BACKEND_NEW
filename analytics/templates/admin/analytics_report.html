@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - Mahmood Pharmacy Analytics</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,11 +29,181 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style> body { font-family: 'Inter', sans-serif; } </style>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .dark body {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .dark .gradient-text {
+            background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .dark .btn-gradient {
+            background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%);
+        }
+        
+        .dark .btn-gradient:hover {
+            background: linear-gradient(135deg, #06b6d4 0%, #14b8a6 100%);
+            box-shadow: 0 10px 25px rgba(20, 184, 166, 0.4);
+        }
+        
+        .chart-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        .dark .chart-container::before {
+            background: linear-gradient(90deg, #14b8a6, #06b6d4, #14b8a6);
+            background-size: 200% 100%;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .filter-dropdown {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-dropdown:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+        }
+        
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .dark .nav-link::after {
+            background: linear-gradient(90deg, #14b8a6, #06b6d4);
+        }
+    </style>
     <script>
-        // Immediately check theme prevents flash
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
@@ -42,36 +211,42 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 text-slate-800 transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100">
+<body class="min-h-screen transition-all duration-500">
 
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm transition-colors duration-300 dark:bg-slate-800 dark:border-slate-700">
+    <!-- Navbar with Glass Effect -->
+    <nav class="sticky top-0 z-50 glass-effect shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-3">
-                    <a href="{% url 'admin-charts' %}" class="flex items-center gap-2 text-xl font-bold text-teal-600 dark:text-teal-400">
-                        <i class="fa-solid fa-prescription-bottle-medical text-2xl"></i>
-                        <span>Mahmood Pharmacy</span>
-                    </a>
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-4 animate-slide-in">
+                    <div class="floating-icon">
+                        <img src="{% static 'img/app_logo.png' %}" alt="Logo" class="h-12 w-auto">
+                    </div>
+                    <div>
+                        <a href="{% url 'admin-charts' %}" class="text-2xl font-extrabold gradient-text">
+                            Mahmood Pharmacy
+                        </a>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Advanced Analytics Platform</p>
+                    </div>
                 </div>
-                <!-- Links and Actions -->
+                
                 <div class="flex items-center gap-6">
-                    <a href="{% url 'admin-charts' %}" class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors dark:text-slate-400 dark:hover:text-teal-400">
-                        <i class="fa-solid fa-arrow-left mr-1"></i> Back to Dashboard
+                    <a href="{% url 'admin-charts' %}" class="nav-link text-sm font-semibold text-slate-700 hover:text-purple-600 transition-colors dark:text-slate-300 dark:hover:text-teal-400">
+                        <i class="fa-solid fa-arrow-left mr-2"></i> Dashboard
                     </a>
                     
-                    <!-- Dark Mode Toggle -->
-                    <button id="theme-toggle" class="p-2 rounded-full text-slate-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-slate-400 dark:hover:bg-slate-700" title="Toggle Dark Mode">
-                        <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon text-lg"></i>
-                        <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun text-lg"></i>
+                    <button id="theme-toggle" class="p-3 rounded-xl glass-effect hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-300 dark:focus:ring-teal-500" title="Toggle Dark Mode">
+                        <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon text-xl text-purple-600"></i>
+                        <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun text-xl text-amber-500"></i>
                     </button>
                     
-                    <div class="hidden sm:flex items-center gap-3 border-l border-gray-300 pl-6 dark:border-slate-600">
+                    <div class="hidden sm:flex items-center gap-4 border-l-2 border-purple-200 pl-6 dark:border-slate-600">
                         <div class="text-right">
-                            <p class="text-xs font-semibold text-slate-900 dark:text-white">Admin User</p>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Logged in</p>
+                            <p class="text-sm font-bold text-slate-900 dark:text-white">Admin User</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">
+                                <i class="fa-solid fa-circle text-green-500 text-xs mr-1"></i> Online
+                            </p>
                         </div>
-                        <div class="h-8 w-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold dark:bg-teal-900 dark:text-teal-300">A</div>
+                        <div class="h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">A</div>
                     </div>
                 </div>
             </div>
@@ -79,65 +254,87 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
-        <!-- Header & Filter -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-            <div>
-                <h1 class="text-2xl font-bold text-slate-900 dark:text-white">{{ title }}</h1>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Detailed performance report</p>
-            </div>
+        <!-- Header Section -->
+        <div class="glass-effect rounded-3xl shadow-2xl p-8 mb-8 animate-fade-in-up">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div class="flex-1">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-3">
+                        <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg flex-shrink-0">
+                            <i class="fa-solid fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-text">{{ title }}</h1>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium mt-1">
+                                <i class="fa-solid fa-calendar-days mr-2"></i>Real-time performance insights
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="flex items-center bg-white dark:bg-slate-800 p-2 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
-                <label for="branchFilter" class="mr-3 ml-2 text-sm font-semibold text-slate-600 dark:text-slate-300">
-                    <i class="fa-solid fa-filter mr-1"></i> Filter:
-                </label>
-                <select id="branchFilter" onchange="applyFilter()" class="bg-gray-50 border border-gray-300 text-slate-900 text-sm rounded-md focus:ring-teal-500 focus:border-teal-500 block w-full p-2 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500 appearance-none pr-8">
-                    <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branches</option>
-                    {% for branch in branches %}
-                        <option value="{{ branch.id }}" {% if selected_branch == branch.id %}selected{% endif %}>{{ branch.name }}</option>
-                    {% endfor %}
-                </select>
+                <div class="flex items-center gap-4 w-full sm:w-auto">
+                    <div class="glass-effect p-3 sm:p-4 rounded-2xl shadow-lg w-full sm:w-auto">
+                        <label for="branchFilter" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-2 uppercase tracking-wider">
+                            <i class="fa-solid fa-filter mr-2"></i> Filter Branch
+                        </label>
+                        <select id="branchFilter" onchange="applyFilter()" class="filter-dropdown bg-white dark:bg-slate-700 border-2 border-purple-200 dark:border-slate-600 text-slate-900 dark:text-white text-sm rounded-xl focus:ring-purple-500 focus:border-purple-500 block w-full p-2 sm:p-3 font-medium cursor-pointer">
+                            <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>🌐 All Branches</option>
+                            {% for branch in branches %}
+                                <option value="{{ branch.id }}" {% if selected_branch == branch.id %}selected{% endif %}>📍 {{ branch.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Chart Container -->
-        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md border border-gray-100 dark:border-slate-700 p-6">
-            <div class="flex justify-end mb-4">
-                 <button onclick="downloadChart()" class="flex items-center gap-2 bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-700 transition-colors focus:ring-4 focus:ring-teal-300 dark:focus:ring-teal-900">
-                    <i class="fa-solid fa-download"></i> Download PNG
-                 </button>
-            </div>
-            
-            <div class="relative w-full" style="{% if chart_type == 'pie' or chart_type == 'doughnut' %}height: 300px; display: flex; justify-content: center;{% else %}height: 300px;{% endif %}">
-                <canvas id="reportChart"></canvas>
+        <!-- Chart Container with Modern Design -->
+        <div class="glass-effect rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="chart-container">
+                <div class="p-4 sm:p-6 md:p-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-4">
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-1">Data Visualization</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Interactive chart analysis</p>
+                        </div>
+                        <button onclick="downloadChart()" class="btn-gradient text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm font-bold shadow-xl flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center">
+                            <i class="fa-solid fa-download"></i> Download PNG
+                        </button>
+                    </div>
+                    
+                    <div class="relative w-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-4 md:p-6" style="{% if chart_type == 'pie' or chart_type == 'doughnut' %}height: 400px;{% else %}height: 400px;{% endif %}">
+                        <canvas id="reportChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
 
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
     <script>
-        // --- Dark Mode Logic ---
+        // Dark Mode Logic
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
         function setChartTheme(isDark) {
-            const color = isDark ? '#94a3b8' : '#64748b'; // slate-400 : slate-500
-            const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            const color = isDark ? '#cbd5e1' : '#475569';
+            const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
             
             Chart.defaults.color = color;
             Chart.defaults.scale.grid.color = gridColor;
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.font.size = 13;
             
-            // Re-render chart if it exists
             const chartInstance = Chart.getChart("reportChart");
             if (chartInstance) {
                 chartInstance.update();
             }
         }
 
-        // Check state set in head
         if (document.documentElement.classList.contains('dark')) {
             themeToggleLightIcon.classList.remove('hidden');
             setChartTheme(true);
@@ -161,7 +358,7 @@
             }
         });
 
-        // --- Chart Logic ---
+        // Chart Logic with Enhanced Styling
         const reportData = {{ data|safe }};
         const reportType = "{{ report_type }}";
         const chartType = "{{ chart_type }}";
@@ -169,43 +366,96 @@
         const ctx = document.getElementById('reportChart').getContext('2d');
         let chartConfig = {};
 
+        function generateGradient(ctx, color1, color2) {
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(1, color2);
+            return gradient;
+        }
+
         function generateColors(count) {
             const colors = [
-                'rgba(13, 148, 136, 0.7)',  // Teal
-                'rgba(59, 130, 246, 0.7)',  // Blue
-                'rgba(139, 92, 246, 0.7)',  // Purple
-                'rgba(249, 115, 22, 0.7)',  // Orange
-                'rgba(236, 72, 153, 0.7)',  // Pink
-                'rgba(16, 185, 129, 0.7)',  // Emerald
-                'rgba(99, 102, 241, 0.7)'   // Indigo
+                ['#667eea', '#764ba2'],  // Purple
+                ['#f093fb', '#f5576c'],  // Pink
+                ['#4facfe', '#00f2fe'],  // Blue
+                ['#43e97b', '#38f9d7'],  // Green
+                ['#fa709a', '#fee140'],  // Orange
+                ['#30cfd0', '#330867'],  // Teal
+                ['#ff6b6b', '#ee5a6f'],  // Red
+                ['#ffd93d', '#f6a623'],  // Yellow
+                ['#a8edea', '#fed6e3'],  // Pastel
+                ['#ff9a9e', '#fecfef']   // Rose
             ];
-            return Array(count).fill().map((_, i) => colors[i % colors.length]);
+            return colors.slice(0, count).map(([c1, c2]) => {
+                const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                gradient.addColorStop(0, c1);
+                gradient.addColorStop(1, c2);
+                return gradient;
+            });
+        }
+        
+        function calculatePercentages(data) {
+            const total = data.reduce((sum, item) => sum + item, 0);
+            return data.map(value => ((value / total) * 100).toFixed(1));
         }
 
         if (reportType === 'daily_sales') {
             const labels = reportData.map(d => d.day);
             const values = reportData.map(d => d.total);
             
+            const gradient = generateGradient(ctx, 'rgba(102, 126, 234, 0.8)', 'rgba(118, 75, 162, 0.1)');
+            
             chartConfig = {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Daily Sales',
+                        label: 'Daily Sales Revenue',
                         data: values,
-                        borderColor: '#0d9488', // Teal-600
-                        backgroundColor: 'rgba(13, 148, 136, 0.1)',
+                        borderColor: '#667eea',
+                        backgroundColor: gradient,
                         fill: true,
                         tension: 0.4,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#667eea',
+                        pointBorderWidth: 3,
+                        pointHoverBackgroundColor: '#667eea',
+                        pointHoverBorderColor: '#fff',
+                        borderWidth: 3
                     }]
                 },
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                font: { size: 14, weight: 'bold' },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            borderColor: '#667eea',
+                            borderWidth: 2
+                        }
+                    },
                     scales: { 
-                        y: { beginAtZero: true } 
+                        y: { 
+                            beginAtZero: true,
+                            grid: { drawBorder: false },
+                            ticks: { padding: 10 }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { padding: 10 }
+                        }
                     } 
                 }
             };
@@ -214,21 +464,47 @@
             const values = reportData.map(d => d.total);
             
             chartConfig = {
-                type: 'bar', /* Monthly looks better as bar usually, but line is requested? Let's stick to bar for monthly to differentiate? Or line. User said "options... for monthly sale". Let's use Line for consistency or Bar. Let's use Line for now as per previous trend style. actually let's use Bar for monthly to distinguish. */
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Monthly Sales',
+                        label: 'Monthly Sales Revenue',
                         data: values,
-                        backgroundColor: '#3b82f6', // Blue
-                        borderRadius: 4,
+                        backgroundColor: generateColors(values.length),
+                        borderRadius: 12,
+                        borderSkipped: false
                     }]
                 },
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                font: { size: 14, weight: 'bold' },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            borderColor: '#667eea',
+                            borderWidth: 2
+                        }
+                    },
                     scales: { 
-                        y: { beginAtZero: true } 
+                        y: { 
+                            beginAtZero: true,
+                            grid: { drawBorder: false },
+                            ticks: { padding: 10 }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { padding: 10 }
+                        }
                     } 
                 }
             };
@@ -243,8 +519,10 @@
                      values = reportData.map(d => d.total_spent);
                      labelText = "Total Spent";
                  } else if (reportType === 'top_products' || reportType === 'top_categories') {
-                     labels = reportData.map(d => d.name);
-                     values = reportData.map(d => d.count);
+                     // Filter out null or empty names
+                     const filteredData = reportData.filter(d => d.name && d.name !== 'null');
+                     labels = filteredData.map(d => d.name);
+                     values = filteredData.map(d => d.count);
                      labelText = "Units Sold";
                  } else if (reportType === 'branch_sales') {
                      labels = reportData.map(d => d.branch__name);
@@ -257,6 +535,8 @@
                  }
             }
             
+            const percentages = calculatePercentages(values);
+            
             chartConfig = {
                 type: chartType,
                 data: {
@@ -265,14 +545,83 @@
                         label: labelText,
                         data: values,
                         backgroundColor: generateColors(values.length),
-                        borderColor: 'transparent',
-                        borderWidth: 1
+                        borderColor: '#fff',
+                        borderWidth: chartType === 'pie' || chartType === 'doughnut' ? 3 : 0,
+                        borderRadius: chartType === 'bar' ? 12 : 0
                     }]
                 },
                 options: { 
                     responsive: true,
                     maintainAspectRatio: false,
-                    indexAxis: (reportType === 'top_products') ? 'y' : 'x', 
+                    indexAxis: (reportType === 'top_products') ? 'y' : 'x',
+                    plugins: {
+                        legend: {
+                            display: chartType === 'pie' || chartType === 'doughnut',
+                            // Position bottom for top_categories as requested, or generally for all circular charts for better visibility
+                            position: 'bottom',
+                            labels: {
+                                font: { size: window.innerWidth < 768 ? 11 : 13, weight: 'bold' },
+                                padding: window.innerWidth < 768 ? 10 : 20,
+                                usePointStyle: true,
+                                // Sky blue color for visibility in both modes (sky-500)
+                                color: '#0ea5e9', 
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map((label, i) => {
+                                            const value = data.datasets[0].data[i];
+                                            const percentage = percentages[i];
+                                            return {
+                                                text: `${label}: ${value} (${percentage}%)`,
+                                                fillStyle: data.datasets[0].backgroundColor[i],
+                                                fontColor: '#0ea5e9', // Explicitly set text color for the item
+                                                hidden: false,
+                                                index: i
+                                            };
+                                        });
+                                    }
+                                    return [];
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            padding: 16,
+                            titleFont: { size: 15, weight: 'bold' },
+                            bodyFont: { size: 14 },
+                            borderColor: '#667eea',
+                            borderWidth: 2,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || context.parsed === 0 ? context.parsed : '';
+                                    const percentage = percentages[context.dataIndex];
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        },
+                        datalabels: chartType === 'pie' || chartType === 'doughnut' ? {
+                            color: '#fff',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            formatter: (value, context) => {
+                                return percentages[context.dataIndex] + '%';
+                            }
+                        } : false
+                    },
+                    scales: chartType !== 'pie' && chartType !== 'doughnut' ? {
+                        y: { 
+                            beginAtZero: true,
+                            grid: { drawBorder: false },
+                            ticks: { padding: 10 }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { padding: 10 }
+                        }
+                    } : {}
                 }
             };
         }

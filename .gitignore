@@ -72,3 +72,23 @@ prompt.txt
 *.md
 !README.md
 !requirements.md
+
+# Testing & Generated Data
+test_categories_upload.csv
+test_products_upload.csv
+generate_test_csv.py
+generate_test_products_csv.py
+Store List.csv
+verify_output.txt
+verify_result.txt
+verify_result_explicit.txt
+test_result.txt
+
+# FCM / Verification Scripts
+test_fcm_connection.py
+test_fcm_manual.py
+verify_fcm_creds.py
+verify_local_key.py
+
+# Local/Duplicate Settings
+fixed_settings.py

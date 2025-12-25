@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'analytics',
     'marketing',
     'notifications',
+    'django_cleanup.apps.CleanupConfig',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Karachi'
 
 USE_I18N = True
 
@@ -197,6 +199,9 @@ CORS_ALLOW_ALL_ORIGINS = True # For dev only, change in prod
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Fix for Django 5.x Import-Export Crash
+IMPORT_EXPORT_SKIP_ADMIN_LOG = True
+
 # JAZZMIN Settings
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
@@ -228,6 +233,7 @@ JAZZMIN_SETTINGS = {
         # Url that opens in current window, use empty _blank for in current window
         {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Dashboard", "url": "admin-charts", "permissions": ["auth.view_user"], "icon": "fas fa-chart-line"},
+        {"name": "Generate Sales Report", "url": "sales_report"},
     ],
 
     #############

@@ -1,9 +1,12 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from import_export.admin import ImportExportModelAdmin
 from .models import Category, Product, Favorite
+from .resources import CategoryResource, ProductResource
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(ImportExportModelAdmin):
+    resource_class = CategoryResource
     list_display = ('name', 'product_count', 'created_at')
     search_fields = ('name',)
     
@@ -71,7 +74,8 @@ class CreatedAtFilter(admin.SimpleListFilter):
         return queryset
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ImportExportModelAdmin):
+    resource_class = ProductResource
     list_display = ('name', 'category', 'price', 'stock', 'times_sold', 'is_active', 'image_preview')
     list_filter = (CategoryFilter, IsActiveFilter, CreatedAtFilter)
 

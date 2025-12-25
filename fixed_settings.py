@@ -171,6 +171,10 @@ JAZZMIN_SETTINGS = {
     "custom_js": "js/custom_admin.js",
     "show_ui_builder": False, # Turned off for production
     "changeform_format": "horizontal_tabs",
+    "topmenu_links": [
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Generate Sales Report", "url": "sales_report"},
+    ],
 }
 
 JAZZMIN_UI_TWEAKS = {
