@@ -1,12 +1,21 @@
-from django.db.models.signals import post_save
+
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from firebase_admin import messaging
-from orders.models import Order
+from django.db.models import Sum
+from django.db import models
+from orders.models import Order, OrderItem
 from notifications.models import Notification
 import logging
 
+# Firebase import (assumed available based on user's code)
+try:
+    from firebase_admin import messaging
+except ImportError:
+    pass # Handle if firebase_admin is not installed locally
+
 logger = logging.getLogger(__name__)
 
+# --- 1. Notification Logic (Restored from your existing code) ---
 @receiver(post_save, sender=Order)
 def order_status_notification(sender, instance, created, **kwargs):
     # Retrieve the user associated with the order
@@ -51,3 +60,18 @@ def order_status_notification(sender, instance, created, **kwargs):
     except Exception as e:
         # Fallback print/log if notification creation fails
         print(f"Error creating notification object: {e}")
+
+
+# --- 2. Auto-Total Calculation (New Feature) ---
+@receiver(post_save, sender=OrderItem)
+@receiver(post_delete, sender=OrderItem)
+def update_order_total(sender, instance, **kwargs):
+    order = instance.order
+    # Calculate sum of all items in the order
+    total = order.items.aggregate(
+        total=Sum(models.F('price_at_purchase') * models.F('quantity'))
+    )['total'] or 0
+    
+    # Update the order's total_amount
+    order.total_amount = total
+    order.save()

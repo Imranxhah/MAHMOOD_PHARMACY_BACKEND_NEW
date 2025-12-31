@@ -8,3 +8,13 @@ class Banner(models.Model):
 
     def __str__(self):
         return self.title or f"Banner {self.id}"
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=20, blank=True)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback from {self.name} ({self.email})"

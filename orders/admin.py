@@ -1,26 +1,28 @@
 from django.contrib import admin
 from .models import Order, OrderItem, DeliveryCharge
 
-class OrderItemInline(admin.TabularInline):
+class OrderItemInline(admin.StackedInline):
     model = OrderItem
-    readonly_fields = ('product', 'quantity', 'price_at_purchase')
-    can_delete = False
-    extra = 0
+    autocomplete_fields = ['product']
+    extra = 1
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'branch', 'status', 'payment_method', 'total_amount', 'order_at')
+    list_display = ('user', 'branch', 'status', 'order_type', 'total_amount', 'order_at')
     search_fields = ('user__email', 'id', 'contact_number')
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
-            return (StatusFilter, CreatedAtFilter, PaymentMethodFilter, BranchFilter)
-        return (StatusFilter, CreatedAtFilter, PaymentMethodFilter)
+            return (StatusFilter, CreatedAtFilter, OrderTypeFilter, BranchFilter)
+        return (StatusFilter, CreatedAtFilter, OrderTypeFilter)
 
     readonly_fields = ('total_amount',)
     inlines = [OrderItemInline]
     list_editable = ('status',)
     list_display_links = ('user',)
+
+    class Media:
+        js = ('js/admin_order.js',)
 
     def order_at(self, obj):
         return obj.created_at
@@ -52,16 +54,16 @@ class StatusFilter(admin.SimpleListFilter):
             return queryset.filter(status=self.value())
         return queryset
 
-class PaymentMethodFilter(admin.SimpleListFilter):
-    title = 'Filter by Payment Method'
-    parameter_name = 'payment_method'
+class OrderTypeFilter(admin.SimpleListFilter):
+    title = 'Filter by Order Type'
+    parameter_name = 'order_type'
 
     def lookups(self, request, model_admin):
-        return Order.PAYMENT_CHOICES
+        return Order.ORDER_TYPE_CHOICES
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(payment_method=self.value())
+            return queryset.filter(order_type=self.value())
         return queryset
 
 class CreatedAtFilter(admin.SimpleListFilter):

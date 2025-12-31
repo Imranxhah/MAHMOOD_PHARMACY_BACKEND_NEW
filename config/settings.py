@@ -143,7 +143,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
@@ -272,9 +272,9 @@ JAZZMIN_SETTINGS = {
                 "permissions": ["auth.view_user"]
             },
             {
-                "name": "Manager Dashboard", 
-                "url": "manager-dashboard", 
-                "icon": "fas fa-tachometer-alt",
+                "name": "Sales Report", 
+                "url": "sales_report", 
+                "icon": "fas fa-file-invoice-dollar",
                 "permissions": ["orders.view_order"]
             }
         ]

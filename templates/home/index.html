@@ -1,0 +1,1200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mahmood Pharmacy App - Your Pharmacy in Your Pocket</title>
+    <meta
+      name="description"
+      content="Download the Mahmood Pharmacy App. Upload prescriptions, track orders, and get medicines delivered instantly."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- Tailwind Config for Brand Colors -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', "sans-serif"],
+            },
+            colors: {
+              brand: {
+                50: "#f0fdf4",
+                100: "#dcfce7",
+                200: "#bbf7d0",
+                300: "#86efac",
+                400: "#4ade80",
+                500: "#22c55e", // Main Green
+                600: "#16a34a",
+                700: "#15803d",
+                800: "#166534",
+                900: "#14532d",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Custom Styles for App Mockups */
+      .mockup-shadow {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      /* --- New Sophisticated Hero Animation --- */
+      .hero-container {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .animated-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none; /* Ensure clicks pass through */
+      }
+
+      .gradient-wave {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        opacity: 0.6;
+      }
+
+      .wave-1 {
+        background: radial-gradient(
+          ellipse at 30% 40%,
+          rgba(16, 185, 129, 0.2) 0%,
+          transparent 50%
+        ); /* Emerald Green hint */
+        animation: wave1 20s ease-in-out infinite;
+      }
+
+      .wave-2 {
+        background: radial-gradient(
+          ellipse at 70% 60%,
+          rgba(59, 130, 246, 0.15) 0%,
+          transparent 50%
+        ); /* Blue hint */
+        animation: wave2 18s ease-in-out infinite;
+      }
+
+      .wave-3 {
+        background: radial-gradient(
+          ellipse at 50% 50%,
+          rgba(251, 191, 36, 0.1) 0%,
+          transparent 50%
+        ); /* Amber hint */
+        animation: wave3 22s ease-in-out infinite;
+      }
+
+      .particles-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        background-color: #10b981; /* Brand green */
+      }
+
+      @keyframes wave1 {
+        0%,
+        100% {
+          transform: translate(-25%, -25%) rotate(0deg);
+        }
+        50% {
+          transform: translate(-35%, -30%) rotate(180deg);
+        }
+      }
+
+      @keyframes wave2 {
+        0%,
+        100% {
+          transform: translate(-30%, -35%) rotate(0deg);
+        }
+        50% {
+          transform: translate(-25%, -25%) rotate(-180deg);
+        }
+      }
+
+      @keyframes wave3 {
+        0%,
+        100% {
+          transform: translate(-35%, -30%) rotate(0deg);
+        }
+        50% {
+          transform: translate(-30%, -40%) rotate(180deg);
+        }
+      }
+
+      @keyframes floatParticle {
+        0%,
+        100% {
+          transform: translateY(0) translateX(0);
+          opacity: 0.3;
+        }
+        50% {
+          transform: translateY(-30px) translateX(20px);
+          opacity: 0.6;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
+    <!-- NAVIGATION -->
+    <nav
+      class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300"
+      data-aos="fade-down"
+      data-aos-duration="800"
+    >
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <!-- Logo -->
+          <div class="flex-shrink-0 flex items-center gap-2">
+            <div
+              class="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-xl"
+            >
+              M
+            </div>
+            <div>
+              <h1 class="text-xl font-bold text-gray-900 leading-none">
+                Mahmood
+              </h1>
+              <p
+                class="text-xs text-brand-600 font-semibold tracking-wider uppercase"
+              >
+                Pharmacy
+              </p>
+            </div>
+          </div>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="#features"
+              class="text-sm font-medium text-gray-600 hover:text-brand-600 transition"
+              >Features</a
+            >
+            <a
+              href="#shopping"
+              class="text-sm font-medium text-gray-600 hover:text-brand-600 transition"
+              >Shopping</a
+            >
+            <a
+              href="#contact"
+              class="text-sm font-medium text-gray-600 hover:text-brand-600 transition"
+              >Contact</a
+            >
+            <button
+              onclick="downloadFile()"
+              class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-semibold transition shadow-lg shadow-brand-200 transform hover:-translate-y-0.5"
+            >
+              Download App
+            </button>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-btn"
+              class="text-gray-500 hover:text-gray-900 focus:outline-none"
+            >
+              <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu (Hidden by default) -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full left-0 top-20 shadow-lg"
+      >
+        <div class="px-4 pt-2 pb-6 space-y-2">
+          <a
+            href="#features"
+            class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50"
+            >Features</a
+          >
+          <a
+            href="#shopping"
+            class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50"
+            >Shopping</a
+          >
+          <a
+            href="#contact"
+            class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50"
+            >Contact</a
+          >
+          <button
+            onclick="downloadFile()"
+            class="block w-full px-3 py-3 mt-4 text-center rounded-xl text-base font-bold bg-brand-600 text-white hover:bg-brand-700"
+            >Download App</button
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION (Updated with Wave Animation) -->
+    <section
+      class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden hero-container bg-brand-50/30"
+    >
+      <!-- Animated Background Layers -->
+      <div class="animated-background">
+        <div class="gradient-wave wave-1"></div>
+        <div class="gradient-wave wave-2"></div>
+        <div class="gradient-wave wave-3"></div>
+        <div class="particles-container" id="particles"></div>
+      </div>
+
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Hero Content -->
+          <div class="text-left" data-aos="fade-right" data-aos-duration="1000">
+            <div
+              class="inline-flex items-center px-3 py-1 rounded-full bg-white/80 border border-brand-100 text-brand-700 text-xs font-bold uppercase tracking-wide mb-6 backdrop-blur-sm shadow-sm"
+            >
+              <span
+                class="w-2 h-2 rounded-full bg-brand-500 mr-2 animate-pulse"
+              ></span>
+              Now Available on Android
+            </div>
+            <h1
+              class="text-4xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6"
+            >
+              Your Health Is <br />
+              <span class="text-brand-600">Our Priority</span>.
+            </h1>
+
+            <div
+              class="space-y-4 mb-8 text-gray-600 text-lg max-w-2xl mx-auto lg:mx-0"
+            >
+              <p>
+                <span class="font-bold text-gray-900">Serving since 1956.</span>
+                Mahmood Pharmacy is a trusted family-owned business established
+                in Lahore. Backed by six decades of experience and recognized by
+                the Ministry of Health and top consultants, we are your one-stop
+                shop for premium care.
+              </p>
+              <p>
+                We are now entering a new era of convenience. Get the same
+                professional services, personal care, and best prices delivered
+                instantly to your doorstep.
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-start">
+              <!-- Single Download Button -->
+              <button
+                onclick="downloadFile()"
+                class="flex items-center justify-center bg-brand-600 text-white px-8 py-4 rounded-xl hover:bg-brand-700 transition shadow-xl hover:shadow-2xl transform hover:-translate-y-1 w-full sm:w-auto font-bold text-lg group"
+              >
+                <i
+                  data-lucide="download"
+                  class="w-6 h-6 mr-3 group-hover:animate-bounce"
+                ></i>
+                Download App
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Image Placeholder -->
+          <div
+            class="relative mx-auto lg:mr-0"
+            data-aos="fade-left"
+            data-aos-duration="1000"
+            data-aos-delay="200"
+          >
+            <!-- Phone Frame -->
+            <div
+              class="w-[300px] h-[600px] bg-gray-900 rounded-[3rem] border-8 border-gray-900 overflow-hidden mockup-shadow relative z-10 mx-auto"
+            >
+              <!-- Top Bar Mockup (Transparent Background) -->
+              <div
+                class="absolute top-0 left-0 right-0 h-6 z-20 flex justify-center"
+              >
+                <div class="w-20 h-4 bg-black rounded-b-xl"></div>
+              </div>
+
+              <!-- Actual Screenshot -->
+              <img
+                src="{% static 'img/home_page.png' %}"
+                alt="Mahmood Pharmacy App Home Screen"
+                class="w-full h-full object-cover object-top"
+              />
+            </div>
+
+            <!-- Decorative Elements behind phone -->
+            <div
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[340px] h-[640px] bg-white/40 backdrop-blur-xl rounded-[3.5rem] -rotate-6 -z-10 border border-white/50"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE FEATURES SECTION -->
+    <section id="features" class="py-24 bg-white overflow-hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-24" data-aos="fade-up">
+          <div
+            class="inline-block px-4 py-1.5 bg-brand-50 rounded-full border border-brand-100 mb-4"
+          >
+            <span
+              class="text-brand-600 font-bold text-sm tracking-wide uppercase"
+              >Key Capabilities</span
+            >
+          </div>
+          <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            Why Download Our App?
+          </h2>
+          <p class="text-gray-600 max-w-2xl mx-auto text-lg mb-8">
+            We've redesigned the pharmacy experience. Here's how we make your
+            life healthier and easier.
+          </p>
+
+          <!-- Cursor Down Animation -->
+          <div class="flex justify-center animate-bounce">
+            <div
+              class="p-2 bg-white rounded-full shadow-md border border-gray-100 text-brand-600"
+            >
+              <i data-lucide="arrow-down" class="w-6 h-6"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-32">
+          <!-- Feature 1: Snap & Order (Image Right) -->
+          <div class="flex flex-col lg:flex-row items-center gap-16">
+            <div class="w-full lg:w-1/2 space-y-8" data-aos="fade-right">
+              <div
+                class="w-16 h-16 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center shadow-sm"
+              >
+                <i data-lucide="camera" class="w-8 h-8"></i>
+              </div>
+              <div>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">
+                  Snap & Order
+                </h3>
+                <p class="text-gray-600 text-lg leading-relaxed">
+                  Don't struggle with reading doctors' handwriting. Simply take
+                  a photo of your prescription, upload it, and our pharmacists
+                  will handle the deciphering and packing for you.
+                </p>
+              </div>
+              <ul class="space-y-3">
+                <li class="flex items-center text-gray-700">
+                  <i
+                    data-lucide="check-circle-2"
+                    class="w-5 h-5 text-brand-500 mr-3"
+                  ></i>
+                  <span>Instant verification by pharmacists</span>
+                </li>
+                <li class="flex items-center text-gray-700">
+                  <i
+                    data-lucide="check-circle-2"
+                    class="w-5 h-5 text-brand-500 mr-3"
+                  ></i>
+                  <span>Secure medical record storage</span>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="w-full lg:w-1/2 relative flex justify-center lg:justify-end"
+              data-aos="fade-left"
+            >
+              <!-- Decorative Blob -->
+              <div
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-brand-50/50 rounded-full blur-3xl -z-10"
+              ></div>
+
+              <!-- Simple, Sleek Phone Frame (Rounded Body, Rounded Screen, Reduced Padding) -->
+              <div
+                class="relative w-[300px] bg-gray-900 rounded-[3rem] p-2 shadow-2xl ring-1 ring-gray-900/5"
+              >
+                <!-- Rounded screen container inside rounded body -->
+                <div
+                  class="w-full h-auto bg-white rounded-[2.5rem] overflow-hidden"
+                >
+                  <img
+                    src="{% static 'img/prescription.jpeg' %}"
+                    alt="Upload Prescription"
+                    class="w-full h-auto object-cover block"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 2: Quick Order (Image Left) -->
+          <div class="flex flex-col lg:flex-row-reverse items-center gap-16">
+            <div class="w-full lg:w-1/2 space-y-8" data-aos="fade-left">
+              <div
+                class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm"
+              >
+                <i data-lucide="zap" class="w-8 h-8"></i>
+              </div>
+              <div>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">
+                  Quick Order
+                </h3>
+                <p class="text-gray-600 text-lg leading-relaxed">
+                  Running low on your daily essentials? Re-order your past
+                  medicines in seconds with our single-click Quick Order
+                  feature. No need to search again.
+                </p>
+              </div>
+              <ul class="space-y-3">
+                <li class="flex items-center text-gray-700">
+                  <i
+                    data-lucide="check-circle-2"
+                    class="w-5 h-5 text-blue-500 mr-3"
+                  ></i>
+                  <span>One-tap reordering</span>
+                </li>
+                <li class="flex items-center text-gray-700">
+                  <i
+                    data-lucide="check-circle-2"
+                    class="w-5 h-5 text-blue-500 mr-3"
+                  ></i>
+                  <span>Smart history tracking</span>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="w-full lg:w-1/2 relative flex justify-center lg:justify-start"
+              data-aos="fade-right"
+            >
+              <!-- Decorative Blob -->
+              <div
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-50/50 rounded-full blur-3xl -z-10"
+              ></div>
+
+              <!-- Simple, Sleek Phone Frame (Rounded Body, Rounded Screen, Reduced Padding) -->
+              <div
+                class="relative w-[300px] bg-gray-900 rounded-[3rem] p-2 shadow-2xl ring-1 ring-gray-900/5"
+              >
+                <div
+                  class="w-full h-auto bg-white rounded-[2.5rem] overflow-hidden"
+                >
+                  <img
+                    src="{% static 'img/quick_order.jpeg' %}"
+                    alt="Quick Checkout"
+                    class="w-full h-auto object-cover block"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 3: Navigation (Image Right) -->
+          <div class="flex flex-col lg:flex-row items-center gap-16">
+            <div class="w-full lg:w-1/2 space-y-8" data-aos="fade-right">
+              <div
+                class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center shadow-sm"
+              >
+                <i data-lucide="map-pin" class="w-8 h-8"></i>
+              </div>
+              <div>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">
+                  Nearest Branch
+                </h3>
+                <p class="text-gray-600 text-lg leading-relaxed">
+                  Need to visit us in person? Find the Mahmood Pharmacy closest
+                  to your location instantly. We provide integrated Google Maps
+                  directions with a single tap.
+                </p>
+              </div>
+              <ul class="space-y-3">
+                <li class="flex items-center text-gray-700">
+                  <i
+                    data-lucide="check-circle-2"
+                    class="w-5 h-5 text-purple-500 mr-3"
+                  ></i>
+                  <span>Real-time distance calculation</span>
+                </li>
+                <li class="flex items-center text-gray-700">
+                  <i
+                    data-lucide="check-circle-2"
+                    class="w-5 h-5 text-purple-500 mr-3"
+                  ></i>
+                  <span>One-tap navigation</span>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="w-full lg:w-1/2 relative flex justify-center lg:justify-end"
+              data-aos="fade-left"
+            >
+              <!-- Decorative Blob -->
+              <div
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-purple-50/50 rounded-full blur-3xl -z-10"
+              ></div>
+
+              <!-- Simple, Sleek Phone Frame (Rounded Body, Rounded Screen, Reduced Padding) -->
+              <div
+                class="relative w-[300px] bg-gray-900 rounded-[3rem] p-2 shadow-2xl ring-1 ring-gray-900/5"
+              >
+                <div
+                  class="w-full h-auto bg-white rounded-[2.5rem] overflow-hidden"
+                >
+                  <img
+                    src="{% static 'img/nearest_branch.jpeg' %}"
+                    alt="Map View"
+                    class="w-full h-auto object-cover block"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 4: Tracking (Image Left) -->
+          <div class="flex flex-col lg:flex-row-reverse items-center gap-16">
+            <div class="w-full lg:w-1/2 space-y-8" data-aos="fade-left">
+              <div
+                class="w-16 h-16 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center shadow-sm"
+              >
+                <i data-lucide="package-check" class="w-8 h-8"></i>
+              </div>
+              <div>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">
+                  Real-Time Tracking
+                </h3>
+                <p class="text-gray-600 text-lg leading-relaxed">
+                  Stay in the loop. Track your medicine from the moment we
+                  confirm it until it arrives at your doorstep. No more guessing
+                  games.
+                </p>
+              </div>
+              <ul class="space-y-3">
+                <li class="flex items-center text-gray-700">
+                  <i
+                    data-lucide="check-circle-2"
+                    class="w-5 h-5 text-orange-500 mr-3"
+                  ></i>
+                  <span>Live status updates</span>
+                </li>
+                <li class="flex items-center text-gray-700">
+                  <i
+                    data-lucide="check-circle-2"
+                    class="w-5 h-5 text-orange-500 mr-3"
+                  ></i>
+                  <span>Delivery estimates</span>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="w-full lg:w-1/2 relative flex justify-center lg:justify-start"
+              data-aos="fade-right"
+            >
+              <!-- Decorative Blob -->
+              <div
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-orange-50/50 rounded-full blur-3xl -z-10"
+              ></div>
+
+              <!-- Simple, Sleek Phone Frame (Rounded Body, Rounded Screen, Reduced Padding) -->
+              <div
+                class="relative w-[300px] bg-gray-900 rounded-[3rem] p-2 shadow-2xl ring-1 ring-gray-900/5"
+              >
+                <div
+                  class="w-full h-auto bg-white rounded-[2.5rem] overflow-hidden"
+                >
+                  <img
+                    src="{% static 'img/order_tracking.jpeg' %}"
+                    alt="Order Status"
+                    class="w-full h-auto object-cover block"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOPPING EXPERIENCE SECTION -->
+    <section
+      id="shopping"
+      class="py-20 bg-brand-900 text-white overflow-hidden relative"
+    >
+      <!-- Background Pattern -->
+      <div
+        class="absolute inset-0 opacity-10"
+        style="
+          background-image: radial-gradient(#ffffff 1px, transparent 1px);
+          background-size: 30px 30px;
+        "
+      ></div>
+
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <!-- Left: Content -->
+          <div data-aos="fade-right">
+            <h2 class="text-3xl font-bold mb-6">
+              A Seamless Shopping Experience
+            </h2>
+            <p class="text-brand-100 mb-10 text-lg">
+              Browse thousands of products, find exactly what you need, and save
+              your favorites for next time.
+            </p>
+
+            <div class="space-y-8">
+              <div
+                class="flex gap-4 hover:translate-x-2 transition duration-300"
+              >
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-brand-800 rounded-full flex items-center justify-center border border-brand-700"
+                >
+                  <i data-lucide="search" class="text-brand-300"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-bold mb-1">
+                    Smart Search & Filtering
+                  </h4>
+                  <p class="text-brand-200 text-sm">
+                    Find exactly what you need. Search by name, category, or
+                    filter by price.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="flex gap-4 hover:translate-x-2 transition duration-300 delay-75"
+              >
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-brand-800 rounded-full flex items-center justify-center border border-brand-700"
+                >
+                  <i data-lucide="flame" class="text-orange-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-bold mb-1">Hot & Popular Products</h4>
+                  <p class="text-brand-200 text-sm">
+                    See what others are buying. Browse top-rated and trending
+                    health products.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="flex gap-4 hover:translate-x-2 transition duration-300 delay-100"
+              >
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-brand-800 rounded-full flex items-center justify-center border border-brand-700"
+                >
+                  <i data-lucide="heart" class="text-red-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-bold mb-1">Favorites List</h4>
+                  <p class="text-brand-200 text-sm">
+                    Save your regular medicines for easy access and re-ordering
+                    later.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="flex gap-4 hover:translate-x-2 transition duration-300 delay-150"
+              >
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-brand-800 rounded-full flex items-center justify-center border border-brand-700"
+                >
+                  <i data-lucide="folder-open" class="text-yellow-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-bold mb-1">Extensive Categories</h4>
+                  <p class="text-brand-200 text-sm">
+                    Browse through a wide range of categories for all your
+                    health needs.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Visual/Screenshots Collage -->
+          <div
+            class="relative min-h-[500px] lg:min-h-[600px] flex items-center justify-center"
+            data-aos="fade-left"
+            data-aos-delay="200"
+          >
+            <!-- Product Detail (Tall) - Back Left -->
+            <div
+              class="absolute left-0 top-0 w-5/12 shadow-2xl rounded-2xl border-4 border-gray-800 overflow-hidden transform -rotate-6 hover:rotate-0 transition duration-500 hover:z-50 hover:scale-105 z-10 origin-bottom-left"
+            >
+              <img
+                src="{% static 'img/product_detail.jpeg' %}"
+                class="w-full h-auto object-cover"
+                alt="Product Detail"
+              />
+            </div>
+
+            <!-- Product Search (Medium) - Back Right -->
+            <div
+              class="absolute right-0 top-10 w-6/12 shadow-2xl rounded-2xl border-4 border-gray-800 overflow-hidden transform rotate-6 hover:rotate-0 transition duration-500 hover:z-50 hover:scale-105 z-20 origin-bottom-right"
+            >
+              <img
+                src="{% static 'img/product_search.jpeg' %}"
+                class="w-full h-auto object-cover"
+                alt="Product Search"
+              />
+            </div>
+
+            <!-- Category List (Wide) - Front Center -->
+            <div
+              class="absolute bottom-10 lg:bottom-20 left-1/2 transform -translate-x-1/2 w-9/12 shadow-2xl rounded-2xl border-4 border-gray-800 overflow-hidden hover:scale-105 transition duration-500 z-30"
+            >
+              <img
+                src="{% static 'img/category_list.jpeg' %}"
+                class="w-full h-auto object-cover"
+                alt="Category List"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONVENIENCE & TRUST SECTION -->
+    <section class="py-20 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-8 text-center">
+          <!-- Notifications -->
+          <div
+            class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition hover:-translate-y-1 duration-300"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <div
+              class="w-16 h-16 mx-auto bg-red-50 rounded-full flex items-center justify-center mb-4 transition-transform hover:rotate-12"
+            >
+              <i data-lucide="bell-ring" class="text-red-500 w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">
+              Instant Notifications
+            </h3>
+            <p class="text-gray-500 text-sm">
+              Get push updates on your prescription status and order delivery
+              instantly.
+            </p>
+          </div>
+
+          <!-- Addresses -->
+          <div
+            class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition hover:-translate-y-1 duration-300"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div
+              class="w-16 h-16 mx-auto bg-blue-50 rounded-full flex items-center justify-center mb-4 transition-transform hover:rotate-12"
+            >
+              <i data-lucide="home" class="text-blue-500 w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">
+              Address Prediction
+            </h3>
+            <p class="text-gray-500 text-sm">
+              Save your home and work addresses for a faster, hassle-free
+              checkout experience.
+            </p>
+          </div>
+
+          <!-- Payment -->
+          <div
+            class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition hover:-translate-y-1 duration-300"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <div
+              class="w-16 h-16 mx-auto bg-green-50 rounded-full flex items-center justify-center mb-4 transition-transform hover:rotate-12"
+            >
+              <i data-lucide="wallet" class="text-green-500 w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">
+              Flexible Payments
+            </h3>
+            <p class="text-gray-500 text-sm">
+              Pay the way you want. We fully support Cash on Delivery (COD) for
+              your convenience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD CTA -->
+    <section id="download" class="py-20">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="bg-brand-600 rounded-[3rem] p-12 lg:p-20 text-center relative overflow-hidden shadow-2xl transform transition hover:scale-[1.01] duration-500"
+          data-aos="fade-up"
+        >
+          <!-- Decorative circles -->
+          <div
+            class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-white opacity-10 rounded-full"
+          ></div>
+          <div
+            class="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 bg-white opacity-10 rounded-full"
+          ></div>
+
+          <div class="relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+              Ready to simplify your healthcare?
+            </h2>
+            <p class="text-brand-100 text-lg mb-10 max-w-2xl mx-auto">
+              Join thousands of customers who trust Mahmood Pharmacy for their
+              daily medicinal needs. Download the app today.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="#"
+                class="flex items-center justify-center bg-gray-900 text-white px-10 py-4 rounded-xl hover:bg-gray-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full sm:w-auto font-bold text-lg group"
+              >
+                <i
+                  data-lucide="download"
+                  class="w-6 h-6 mr-3 group-hover:animate-bounce"
+                ></i>
+                Download App
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16">
+          <!-- Contact Info -->
+          <div data-aos="fade-right">
+            <div
+              class="inline-block px-4 py-1.5 bg-brand-50 rounded-full border border-brand-100 mb-4"
+            >
+              <span
+                class="text-brand-600 font-bold text-sm tracking-wide uppercase"
+                >Support</span
+              >
+            </div>
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+            <p class="text-gray-600 text-lg mb-8">
+              Have questions about the app or need assistance with an order? Our
+              support team is here to help.
+            </p>
+
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div
+                  class="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center flex-shrink-0 text-brand-600"
+                >
+                  <i data-lucide="map-pin" class="w-6 h-6"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-bold text-gray-900">Visit Us</h4>
+                  <p class="text-gray-600">Lahore, Pakistan</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div
+                  class="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center flex-shrink-0 text-brand-600"
+                >
+                  <i data-lucide="mail" class="w-6 h-6"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-bold text-gray-900">Email Us</h4>
+                  <p class="text-gray-600">info@mahmoodpharmacy.com.pk</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div
+                  class="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center flex-shrink-0 text-brand-600"
+                >
+                  <i data-lucide="phone" class="w-6 h-6"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-bold text-gray-900">Call Us</h4>
+                  <p class="text-gray-600">+92 123 4567890</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feedback Form -->
+          <div
+            class="bg-gray-50 rounded-[2.5rem] p-8 lg:p-10 shadow-sm border border-gray-100"
+            data-aos="fade-left"
+          >
+            {% if success %}
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline">Your message has been sent. We'll be in touch soon.</span>
+            </div>
+            {% endif %}
+
+            {% if error %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">Please fill in all required fields.</span>
+            </div>
+            {% endif %}
+
+            <form method="POST" class="space-y-6">
+              {% csrf_token %}
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <label
+                    for="name"
+                    class="block text-sm font-medium text-gray-700 mb-2"
+                    >Name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition bg-white"
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="phone"
+                    class="block text-sm font-medium text-gray-700 mb-2"
+                    >Phone</label
+                  >
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition bg-white"
+                    placeholder="+92..."
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Email Address</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition bg-white"
+                  placeholder="john@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="message"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition bg-white"
+                  placeholder="How can we help you?"
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full bg-brand-600 text-white font-bold py-4 rounded-xl hover:bg-brand-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div class="col-span-1 md:col-span-2">
+            <div class="flex items-center gap-2 mb-4">
+              <div
+                class="w-8 h-8 bg-brand-600 rounded flex items-center justify-center text-white font-bold"
+              >
+                M
+              </div>
+              <span class="text-white font-bold text-xl">Mahmood Pharmacy</span>
+            </div>
+            <p class="text-sm max-w-xs">
+              Your trusted partner for health and wellness. Bringing the
+              pharmacy to your doorstep.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="text-white font-bold mb-4">Quick Links</h4>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a
+                  href="https://mahmoodpharmacy.com.pk/"
+                  target="_blank"
+                  class="hover:text-brand-400"
+                  >Main Website</a
+                >
+              </li>
+              <li>
+                <a href="#features" class="hover:text-brand-400"
+                  >App Features</a
+                >
+              </li>
+              <li>
+                <a href="#contact" class="hover:text-brand-400">Contact Us</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-brand-400">Privacy Policy</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-brand-400">Terms of Service</a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-white font-bold mb-4">Contact</h4>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center gap-2">
+                <i data-lucide="map-pin" class="w-4 h-4"></i> Pakistan
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+                info@mahmoodpharmacy.com.pk
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center text-xs">
+          &copy; 2024 Mahmood Pharmacy. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Initialize Icons -->
+    <script>
+      lucide.createIcons();
+    </script>
+
+    <!-- Initialize AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true, // Animations happen only once
+        offset: 100, // Trigger offset
+        duration: 800, // Animation duration
+        easing: "ease-out-cubic",
+      });
+
+      // Mobile Menu Toggle Script
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+
+        // Close menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+          });
+        });
+      }
+
+      // Particle System Script for Hero Background
+      function createParticles() {
+        const container = document.getElementById("particles");
+        if (!container) return;
+
+        const particleCount = 60;
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+
+          const size = Math.random() * 6 + 2;
+          const startX = Math.random() * 100;
+          const startY = Math.random() * 100;
+          const duration = Math.random() * 15 + 10;
+          const delay = Math.random() * 5;
+
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${startX}%`;
+          particle.style.top = `${startY}%`;
+          particle.style.animation = `floatParticle ${duration}s ease-in-out ${delay}s infinite`;
+          particle.style.opacity = Math.random() * 0.5 + 0.1;
+
+          container.appendChild(particle);
+        }
+      }
+
+      // Initialize particles on load
+      document.addEventListener("DOMContentLoaded", createParticles);
+    </script>
+    <script>
+      AOS.init();
+      
+      // Mobile menu toggle
+      const btn = document.getElementById("mobile-menu-btn");
+      const menu = document.getElementById("mobile-menu");
+      
+      btn.addEventListener("click", () => {
+          menu.classList.toggle("hidden");
+      });
+
+      // Direct Download Function
+      function downloadFile() {
+          const url = "https://github.com/Imranxhah/MAHMOOD_PHARMACY_BACKEND_APK/releases/download/v1.0/MahmoodPharmacy.apk";
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.setAttribute("download", "");
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+      }
+    </script>
+  </body>
+</html>

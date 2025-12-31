@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Banner
+from .models import Banner, Feedback
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
@@ -13,3 +13,10 @@ class BannerAdmin(admin.ModelAdmin):
              return format_html('<img src="{}" style="width: 100px; height: 50px; object-fit: cover;" />', obj.image.url)
         return "No Image"
     image_preview.short_description = 'Banner Image'
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'phone', 'created_at')
+    search_fields = ('name', 'email', 'message')
+    readonly_fields = ('created_at',)
+    ordering = ('-created_at',)

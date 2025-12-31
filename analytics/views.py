@@ -27,9 +27,18 @@ from weasyprint import HTML, CSS
 from .forms import SalesReportForm
 from orders.models import OrderItem
 
+from rest_framework.permissions import BasePermission
+
+class IsSuperUser(BasePermission):
+    """
+    Allocates access only to superusers.
+    """
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_superuser)
+
 class DashboardStatsView(APIView):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsSuperUser]
 
     def get(self, request):
         total_sales = Order.objects.aggregate(total=Sum('total_amount'))['total'] or 0
@@ -54,7 +63,7 @@ class DashboardStatsView(APIView):
 
 class AnalyticsHubView(APIView):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsSuperUser]
     renderer_classes = [renderers.TemplateHTMLRenderer]
     template_name = 'admin/analytics_dashboard.html'
 
@@ -63,7 +72,7 @@ class AnalyticsHubView(APIView):
 
 class AnalyticsReportView(APIView):
     authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsSuperUser]
     renderer_classes = [renderers.TemplateHTMLRenderer]
     template_name = 'admin/analytics_report.html'
 
@@ -165,11 +174,21 @@ class AnalyticsReportView(APIView):
 
 @staff_member_required
 def sales_report_view(request):
+    # Determine if user is restricted (Manager with a branch)
+    user_branch = None
+    if not request.user.is_superuser and hasattr(request.user, 'branch') and request.user.branch:
+        user_branch = request.user.branch
+
     if request.method == 'POST':
         form = SalesReportForm(request.POST)
         if form.is_valid():
             # Get cleaned data
             branch = form.cleaned_data.get('branch')
+            
+            # FORCE Branch for Managers
+            if user_branch:
+                branch = user_branch
+                
             category = form.cleaned_data.get('category')
             product = form.cleaned_data.get('product')
             start_date = form.cleaned_data.get('start_date')
@@ -225,14 +244,27 @@ def sales_report_view(request):
             
             return response
     else:
-        form = SalesReportForm()
+        initial_data = {}
+        if user_branch:
+            initial_data['branch'] = user_branch
+        form = SalesReportForm(initial=initial_data)
 
-    return render(request, 'analytics/sales_report.html', {'form': form, 'title': 'Generate Sales Report'})
+    return render(request, 'analytics/sales_report.html', {
+        'form': form, 
+        'title': 'Generate Sales Report',
+        'is_manager_restricted': True if user_branch else False
+    })
 
 @staff_member_required
 def visual_report_view(request):
+    # Only Superusers can access the Visual Report (Charts)
+    if not request.user.is_superuser:
+        from django.http import HttpResponseForbidden
+        return HttpResponseForbidden("You do not have permission to view the Analytics Dashboard.")
+
     if request.method == 'POST':
         start_date = request.POST.get('start_date')
+
         end_date = request.POST.get('end_date')
         
         # --- Common Filters ---

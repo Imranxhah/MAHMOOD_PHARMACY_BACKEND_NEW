@@ -45,21 +45,46 @@ img[src*="logo"],
 /* 
    Fix for filter_horizontal widget width in Jazzmin.
 */
+/* 
+   Fix for filter_horizontal widget width in Jazzmin.
+*/
 .selector {
     width: 100% !important;
     display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
+    flex-direction: column !important;
+    /* Stack vertically by default or on constraint */
     align-items: center !important;
-    flex-wrap: nowrap !important;
+}
+
+@media (min-width: 992px) {
+    .selector {
+        flex-direction: row !important;
+        /* Side by side on large screens */
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+    }
+
+    .selector .selector-available,
+    .selector .selector-chosen {
+        width: 45% !important;
+        margin: 0 !important;
+    }
+
+    .selector .selector-chooser {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        padding-top: 50px !important;
+    }
 }
 
 .selector .selector-available,
 .selector .selector-chosen {
-    width: 48% !important;
+    width: 100% !important;
     flex-grow: 1 !important;
-    min-width: 400px;
-    margin: 0 !important;
+    min-width: 0 !important;
+    /* Allow shrinking */
+    margin-bottom: 10px !important;
     padding: 0 !important;
     background: transparent !important;
     border: none !important;
@@ -67,25 +92,25 @@ img[src*="logo"],
 
 .selector select {
     width: 100% !important;
-    min-height: 500px !important;
-    height: 500px !important;
+    min-height: 200px !important;
+    /* Reasonable height */
+    height: auto !important;
     overflow-x: auto !important;
 }
 
 .selector .selector-chooser {
-    width: 60px !important;
-    min-width: 60px !important;
-    flex-shrink: 0 !important;
-    margin: 0 10px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 10px 0 !important;
     padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
     text-align: center !important;
-    transform: translateY(20px);
+    transform: none !important;
+    /* Remove legacy transform */
 }
 
 .selector .selector-chooser li {
-    margin: 5px 0 !important;
+    display: inline-block !important;
+    margin: 0 10px !important;
 }
 
 .selector .selector-filter {
@@ -729,16 +754,38 @@ img[src*="logo"],
     .col-12,
     .col-md-9,
     .col-lg-10,
-    .col-sm-12 {
+    .col-sm-12,
+    .col-sm-3,
+    .col-sm-7,
+    .col-sm-2,
+    .col-sm-9 {
         flex: 0 0 100% !important;
         max-width: 100% !important;
         padding-left: 8px !important;
         padding-right: 8px !important;
+        float: none !important;
+        margin-bottom: 5px !important;
+    }
+
+    /* Force text alignment for labels to left instead of right/center */
+    .col-sm-3.text-left,
+    label.col-sm-3 {
+        text-align: left !important;
+        padding-left: 0 !important;
+        margin-bottom: 5px !important;
     }
 
     #content-main {
         width: 100% !important;
         padding: 0 !important;
+    }
+
+    /* Fix the row inside form-group to wrap */
+    .form-group .row {
+        display: flex !important;
+        flex-direction: column !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
 
     /* Remove any sidebar spacing if present */
@@ -784,4 +831,66 @@ img[src*="logo"],
     }
 
 
+}
+
+/* -------------------------------------------------------------------------- */
+/*             IMPORT / EXPORT BUTTON FIXES (Visibility & Mobile)            */
+/* -------------------------------------------------------------------------- */
+
+/* 1. Fix White-on-White Contrast Issue */
+/* Force specific colors for Import/Export buttons to ensure visibility */
+a.import_link,
+a.export_link {
+    background-color: #6c757d !important;
+    /* Standard Bootstrap Secondary Dark Grey */
+    color: #ffffff !important;
+    border: 1px solid #6c757d !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+a.import_link:hover,
+a.export_link:hover {
+    background-color: #5a6268 !important;
+    border-color: #545b62 !important;
+    color: #ffffff !important;
+}
+
+/* 2. Fix Mobile Visibility (They were hidden by .object-tools display:none) */
+@media (max-width: 991px) {
+
+    /* Re-enable object tools but flex them nicely */
+    .object-tools {
+        display: flex !important;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-bottom: 15px;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* Ensure the button group wraps if needed */
+    .object-tools .btn-group {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 5px;
+        width: 100%;
+        /* Full width on mobile for easier tapping */
+    }
+
+    /* Make buttons bigger and full width on very small screens */
+    .object-tools a.btn {
+        flex: 1 1 auto;
+        /* Grow to fill space */
+        padding: 10px !important;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    /* Ensure the container of these actions is visible */
+    .page-actions {
+        display: block !important;
+        width: 100%;
+    }
 }

@@ -60,9 +60,11 @@
 
                 <!-- Links and Actions -->
                 <div class="flex items-center gap-6">
+                    {% if request.user.is_superuser %}
                     <a href="{% url 'admin-charts' %}" class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors dark:text-slate-400 dark:hover:text-teal-400">
                         <i class="fa-solid fa-chart-line mr-1"></i> Dashboard
                     </a>
+                    {% endif %}
                     <a href="{% url 'admin:index' %}" class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors dark:text-slate-400 dark:hover:text-teal-400">
                         <i class="fa-solid fa-arrow-left mr-1"></i> Admin
                     </a>
@@ -75,11 +77,13 @@
                     
                     <div class="hidden sm:flex items-center gap-3 border-l border-gray-300 pl-6 dark:border-slate-600">
                         <div class="text-right">
-                            <p class="text-xs font-semibold text-slate-900 dark:text-white">Admin User</p>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Logged in</p>
+                            <p class="text-xs font-semibold text-slate-900 dark:text-white">{{ request.user.email }}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">
+                                {% if request.user.is_superuser %}Super Admin{% else %}Manager{% endif %}
+                            </p>
                         </div>
                         <div class="h-8 w-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold dark:bg-teal-900 dark:text-teal-300">
-                            A
+                            {{ request.user.first_name|first|default:"U" }}
                         </div>
                     </div>
                 </div>
@@ -138,10 +142,12 @@
                          <div class="col-span-1 md:col-span-2 mt-2">
                             <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-4 border-b dark:border-slate-700 pb-2">Filters</h3>
                              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {% if not is_manager_restricted %}
                                 <div>
                                     <label for="{{ form.branch.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.branch.label }}</label>
                                     {{ form.branch }}
                                 </div>
+                                {% endif %}
                                 <div>
                                     <label for="{{ form.category.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.category.label }}</label>
                                     {{ form.category }}

@@ -46,9 +46,14 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, related_name='order_items', on_delete=models.PROTECT) # Protect product from deletion if in order
+    product = models.ForeignKey(Product, related_name='order_items', on_delete=models.PROTECT, limit_choices_to={'stock__gt': 0}) # Protect product from deletion if in order
     quantity = models.PositiveIntegerField(default=1)
-    price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2) # Store price at time of purchase
+    price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2, blank=True) # Store price at time of purchase
+
+    def save(self, *args, **kwargs):
+        if not self.price_at_purchase and self.product:
+            self.price_at_purchase = self.product.price
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.product.name} x {self.quantity}"

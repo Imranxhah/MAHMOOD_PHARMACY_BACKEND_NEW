@@ -2,7 +2,9 @@ from rest_framework import viewsets, generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser
-from .models import Banner
+from rest_framework.permissions import AllowAny, IsAdminUser
+from .models import Banner, Feedback
+from django.shortcuts import render
 from .serializers import BannerSerializer
 
 class BannerViewSet(viewsets.ModelViewSet):
@@ -30,3 +32,24 @@ class SendNotificationView(APIView):
         # 2. Use firebase_admin to send multicast message
         
         return Response({"success": True, "message": f"Notification '{title}' queued for sending."}, status=status.HTTP_200_OK)
+
+def landing_page(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        
+        # Simple Validation
+        if name and email and message:
+            Feedback.objects.create(
+                name=name,
+                phone=phone,
+                email=email,
+                message=message
+            )
+            return render(request, 'home/index.html', {'success': True})
+        else:
+            return render(request, 'home/index.html', {'error': True})
+            
+    return render(request, 'home/index.html')
