@@ -8,7 +8,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'product', 'product_name', 'product_image', 'quantity', 'price_at_purchase']
+        fields = ['id', 'product', 'product_name', 'product_image', 'quantity', 'unit_type', 'price_at_purchase']
         read_only_fields = ['price_at_purchase']
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class CreateOrderSerializer(serializers.Serializer):
     payment_method = serializers.ChoiceField(choices=['COD', 'PAYED'], required=False, default='COD')
     order_type = serializers.ChoiceField(choices=['Normal', 'Quick'], required=False, default='Normal')
     items = serializers.ListField(
-        child=serializers.DictField(child=serializers.CharField())
+        child=serializers.DictField()
     ) 
     # expected items: [{"product_id": 1, "quantity": 2}, ...]
 

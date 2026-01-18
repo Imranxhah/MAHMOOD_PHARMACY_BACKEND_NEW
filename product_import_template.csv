@@ -1,0 +1,11 @@
+name,category,price,stock,description,is_active,generic_name,manufacturer,strips_in_pack,tablets_in_strip,pack_price,strip_price
+Panadol Extra,Tablets,15.00,500,For tough pain,1,Paracetamol + Caffeine,GSK,20,10,300.00,15.00
+Brufen Syrup,Syrups,120.00,100,Anti-inflammatory syrup for kids,1,Ibuprofen,Abbott,,,,
+Augmentin 1g,Tablets,60.00,200,Broad spectrum antibiotic,1,Co-amoxiclav,GSK,10,6,360.00,60.00
+Flagyl 400mg,Tablets,8.00,300,Antibiotic for infections,1,Metronidazole,Sanofi,20,10,160.00,8.00
+Disprin Soluble,Tablets,3.00,1000,Fast pain relief,1,Aspirin,Reckitt Benckiser,100,10,300.00,30.00
+Polyfax Skin,Ointments,150.00,50,Topical antibiotic ointment,1,Polymyxin B + Bacitracin,GSK,,,,
+Gravinate Inj,Injections,90.00,60,For nausea and vomiting,1,Dimenhydrinate,Searle,,,,
+Ventolin Inhaler,Equipment,800.00,20,Asthma relief inhaler,1,Salbutamol,GSK,,,,
+Cac1000 Plus,Tablets,25.00,150,Calcium supplement,1,Calcium + Vitamin D,GSK,10,10,250.00,25.00
+Sunnyplast,Surgicals,5.00,200,Adhesive bandage,1,,Master,,,,

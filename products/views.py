@@ -49,7 +49,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.filter(is_active=True)
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['name', 'category__name']
+    search_fields = ('name', 'category__name', 'generic_name')
     ordering_fields = ['price', 'created_at', 'stock']
     ordering = ['-created_at'] # Default ordering
 
@@ -66,8 +66,14 @@ class ProductViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         category_id = self.request.query_params.get('category')
+        generic_name = self.request.query_params.get('generic_name')
         min_price = self.request.query_params.get('min_price')
         max_price = self.request.query_params.get('max_price')
+
+        if generic_name:
+            # If generic_name is provided, filter by it.
+            # We use icontains for robustness against whitespace or partial matches
+            queryset = queryset.filter(generic_name__icontains=generic_name.strip())
 
         if category_id:
             queryset = queryset.filter(category_id=category_id)

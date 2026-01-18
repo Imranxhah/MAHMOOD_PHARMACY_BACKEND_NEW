@@ -1,4 +1,5 @@
 import logging
+from datetime import timedelta
 from django.shortcuts import render
 from rest_framework import viewsets, status, generics
 from rest_framework.views import APIView
@@ -121,6 +122,13 @@ class RegisterView(APIView):
                 user = User.objects.filter(email=email).first()
 
                 if user and not user.is_active:
+                    # Fix for Double-Click Race Condition
+                    if user.otp_created_at and timezone.now() < user.otp_created_at + timedelta(minutes=1):
+                         return Response({
+                            "status": "unverified",
+                            "message": "Account validation pending. Please check your email for the code."
+                        }, status=status.HTTP_409_CONFLICT)
+
                     try:
                         with transaction.atomic():
                             otp = generate_otp()

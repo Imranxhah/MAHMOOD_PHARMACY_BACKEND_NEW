@@ -3,9 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.permissions import AllowAny, IsAdminUser
-from .models import Banner, Feedback
+from .models import Banner, Feedback, AppVersion
 from django.shortcuts import render
-from .serializers import BannerSerializer
+from .serializers import BannerSerializer, AppVersionSerializer
 
 class BannerViewSet(viewsets.ModelViewSet):
     queryset = Banner.objects.filter(is_active=True).order_by('-created_at')
@@ -16,6 +16,17 @@ class BannerViewSet(viewsets.ModelViewSet):
          if self.action in ['create', 'update', 'partial_update', 'destroy']:
              return [IsAdminUser()]
          return [AllowAny()]
+
+class AppVersionView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        try:
+            latest_version = AppVersion.objects.latest()
+            serializer = AppVersionSerializer(latest_version)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except AppVersion.DoesNotExist:
+            return Response({"error": "No version info found"}, status=status.HTTP_404_NOT_FOUND)
 
 class SendNotificationView(APIView):
     permission_classes = [IsAdminUser]

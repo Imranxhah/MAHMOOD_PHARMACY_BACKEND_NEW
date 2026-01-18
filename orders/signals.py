@@ -24,7 +24,7 @@ def order_status_notification(sender, instance, created, **kwargs):
     # helper to get items string
     items = instance.items.all()
     if items.exists():
-        item_str = ", ".join([f"{item.quantity}x {item.product.name}" for item in items])
+        item_str = ", ".join([f"{item.quantity} {item.unit_type} of {item.product.name}" for item in items])
     else:
         item_str = ""
 
@@ -66,12 +66,35 @@ def order_status_notification(sender, instance, created, **kwargs):
 @receiver(post_save, sender=OrderItem)
 @receiver(post_delete, sender=OrderItem)
 def update_order_total(sender, instance, **kwargs):
-    order = instance.order
-    # Calculate sum of all items in the order
-    total = order.items.aggregate(
-        total=Sum(models.F('price_at_purchase') * models.F('quantity'))
-    )['total'] or 0
+    # Safely get order_id (instance.order might trigger DB lookup failing if order is deleted)
+    order_id = instance.order_id
     
-    # Update the order's total_amount
-    order.total_amount = total
-    order.save()
+    # Check if Order still exists (It might be deleted in a cascade)
+    # If we are deleting the Order, the OrderItems are deleted, causing this signal.
+    # accessing the Order blindly and saving it would cause a crash or resurrect it.
+    if not Order.objects.filter(pk=order_id).exists():
+        return
+
+    try:
+        order = Order.objects.get(pk=order_id)
+        # Calculate sum of all items in the order
+        total = order.items.aggregate(
+            total=Sum(models.F('price_at_purchase') * models.F('quantity'))
+        )['total'] or 0
+        
+        # Add Delivery Charge
+        from .models import DeliveryCharge
+        delivery_charge = DeliveryCharge.objects.first()
+        if delivery_charge:
+            total += delivery_charge.amount
+
+        # Update the order's total_amount safely without triggering post_save signals
+        # This prevents creating new "Notification" objects during a delete cascade,
+        # which would otherwise block the deletion with an IntegrityError.
+        Order.objects.filter(pk=order_id).update(total_amount=total)
+        
+    except Order.DoesNotExist:
+        # Should be caught by the filter check above, but safely pass just in case
+        pass
+    except Exception as e:
+        logger.error(f"Error updating order total for order {order_id}: {e}")

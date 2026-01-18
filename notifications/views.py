@@ -51,7 +51,8 @@ class NotificationViewSet(viewsets.ModelViewSet):
                     "title": b.title,
                     "body": b.body,
                     "is_read": is_read,
-                    "created_at": b.created_at.strftime("%Y-%m-%d %H:%M:%S")
+                    "created_at": b.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                    "data": {} # Broadcasts currently don't link to orders
                 })
 
         # 2. Fetch User Notifications (if auth)

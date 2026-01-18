@@ -1,0 +1,9 @@
+name,category,price,stock,description,is_active,generic_name,manufacturer,strips_in_pack,tablets_in_strip,pack_price,strip_price,barcode
+Panadol Extra 500mg,Tablets,150.00,100,Fast relief for tough pain,TRUE,Paracetamol + Caffeine,GSK,10,12,150.00,15.00,
+Amoxicillin 500mg,Antibiotics,450.00,50,Broad spectrum antibiotic,TRUE,Amoxicillin,Pfizer,2,10,450.00,225.00,890123456002
+Benylin Dry Cough,Syrups,380.00,30,Effective relief from dry cough,TRUE,Diphenhydramine,Johnson & Johnson,,,380.00,,890123456003
+Dettol Hand Sanitizer,Hygiene,250.00,200,Instant germ protection,TRUE,Ethyl Alcohol,Reckitt Benckiser,,,250.00,,890123456004
+Nexium 40mg,Gastro,1200.00,40,Treatment for acid reflux,TRUE,Esomeprazole,AstraZeneca,4,7,1200.00,300.00,890123456005
+Vicks VapoRub,Ointments,180.00,75,Relieves cough and cold symptoms,TRUE,Menthol + Camphor,P&G,,,180.00,,890123456006
+Augmentin 625mg,Antibiotics,950.00,25,Powerful antibiotic combination,TRUE,Co-amoxiclav,GSK,2,7,950.00,475.00,890123456007
+Voltral Emulgel,Ointments,320.00,60,Anti-inflammatory pain relief,TRUE,Diclofenac Diethylamine,Novartis,,,320.00,,890123456008

@@ -1,0 +1,127 @@
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Firebase Admin SDK initialized successfully.
+Found 4 test(s).
+Operations to perform:
+  Synchronize unmigrated apps: analytics, corsheaders, django_cleanup, import_export, jazzmin, messages, rest_framework, rest_framework_simplejwt, staticfiles
+  Apply all migrations: admin, auth, branches, contenttypes, marketing, notifications, orders, prescriptions, products, sessions, token_blacklist, users
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0001_initial... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying users.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying branches.0001_initial... OK
+  Applying marketing.0001_initial... OK
+  Applying marketing.0002_feedback... OK
+  Applying marketing.0003_appversion... OK
+  Applying products.0001_initial... OK
+  Applying orders.0001_initial... OK
+  Applying orders.0002_order_branch... OK
+  Applying orders.0003_order_payment_method... OK
+  Applying orders.0004_order_order_type... OK
+  Applying orders.0005_deliverycharge... OK
+  Applying orders.0006_alter_order_contact_number... OK
+  Applying orders.0007_alter_order_payment_method_alter_order_status... OK
+  Applying notifications.0001_initial... OK
+  Applying notifications.0002_notification_order... OK
+  Applying notifications.0003_broadcaststatus... OK
+  Applying orders.0008_alter_orderitem_price_at_purchase... OK
+  Applying orders.0009_alter_orderitem_product... OK
+  Applying orders.0010_orderitem_unit_type... OK
+  Applying orders.0011_orderitem_is_manual_price... OK
+  Applying prescriptions.0001_initial... OK
+  Applying prescriptions.0002_prescription_contact_number... OK
+  Applying prescriptions.0003_alter_prescription_contact_number... OK
+  Applying prescriptions.0004_alter_prescription_contact_number... OK
+  Applying prescriptions.0005_prescription_branch... OK
+  Applying prescriptions.0006_remove_prescription_notes_prescription_address... OK
+  Applying prescriptions.0007_prescription_note... OK
+  Applying products.0002_product_generic_name... OK
+  Applying products.0003_product_pack_price_product_strip_price_and_more... OK
+  Applying products.0004_product_manufacturer... OK
+  Applying products.0005_product_barcode... OK
+  Applying sessions.0001_initial... OK
+  Applying token_blacklist.0001_initial... OK
+  Applying token_blacklist.0002_outstandingtoken_jti_hex... OK
+  Applying token_blacklist.0003_auto_20171017_2007... OK
+  Applying token_blacklist.0004_auto_20171017_2013... OK
+  Applying token_blacklist.0005_remove_outstandingtoken_jti... OK
+  Applying token_blacklist.0006_auto_20171017_2113... OK
+  Applying token_blacklist.0007_auto_20171017_2214... OK
+  Applying token_blacklist.0008_migrate_to_bigautofield... OK
+  Applying token_blacklist.0010_fix_migrate_to_bigautofield... OK
+  Applying token_blacklist.0011_linearizes_history... OK
+  Applying token_blacklist.0012_alter_outstandingtoken_user... OK
+  Applying token_blacklist.0013_alter_blacklistedtoken_options_and_more... OK
+  Applying users.0002_address... OK
+  Applying users.0003_alter_user_mobile... OK
+  Applying users.0004_user_branch... OK
+  Applying users.0005_user_fcm_token... OK
+  Applying users.0006_alter_user_fcm_token... OK
+System check identified no issues (0 silenced).
+test_import_empty_barcodes_are_none (products.tests.ProductImportTests.test_import_empty_barcodes_are_none) ... FAIL
+test_import_new_product_with_barcode (products.tests.ProductImportTests.test_import_new_product_with_barcode) ... FAIL
+test_import_update_existing_by_barcode (products.tests.ProductImportTests.test_import_update_existing_by_barcode) ... FAIL
+test_import_update_existing_by_name_fallback (products.tests.ProductImportTests.test_import_update_existing_by_name_fallback) ... FAIL
+
+======================================================================
+FAIL: test_import_empty_barcodes_are_none (products.tests.ProductImportTests.test_import_empty_barcodes_are_none)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\kpk laptops\Desktop\ONLY DJANGO\MAHMOOD_PHARMACY_BACKEND\products\tests.py", line 123, in test_import_empty_barcodes_are_none
+    self.assertFalse(result.has_errors())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_import_new_product_with_barcode (products.tests.ProductImportTests.test_import_new_product_with_barcode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\kpk laptops\Desktop\ONLY DJANGO\MAHMOOD_PHARMACY_BACKEND\products\tests.py", line 61, in test_import_new_product_with_barcode
+    self.assertFalse(result.has_errors())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_import_update_existing_by_barcode (products.tests.ProductImportTests.test_import_update_existing_by_barcode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\kpk laptops\Desktop\ONLY DJANGO\MAHMOOD_PHARMACY_BACKEND\products\tests.py", line 77, in test_import_update_existing_by_barcode
+    self.assertFalse(result.has_errors())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_import_update_existing_by_name_fallback (products.tests.ProductImportTests.test_import_update_existing_by_name_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\kpk laptops\Desktop\ONLY DJANGO\MAHMOOD_PHARMACY_BACKEND\products\tests.py", line 99, in test_import_update_existing_by_name_fallback
+    self.assertFalse(result.has_errors())
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.051s
+
+FAILED (failures=4)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Row Errors: [(1, [<Error: AttributeError("'NullableCharWidget' object has no attribute 'empty_values'") at row OrderedDict({'name': 'Item1', 'category': 'ImportCategory', 'price': '10', 'stock': '10', 'barcode': None}) at number 1>]), (2, [<Error: AttributeError("'NullableCharWidget' object has no attribute 'empty_values'") at row OrderedDict({'name': 'Item2', 'category': 'ImportCategory', 'price': '10', 'stock': '10', 'barcode': None}) at number 2>])]
+Row 1: [<Error: AttributeError("'NullableCharWidget' object has no attribute 'empty_values'") at row OrderedDict({'name': 'Item1', 'category': 'ImportCategory', 'price': '10', 'stock': '10', 'barcode': None}) at number 1>]
+Error: 'NullableCharWidget' object has no attribute 'empty_values'
+Row 2: [<Error: AttributeError("'NullableCharWidget' object has no attribute 'empty_values'") at row OrderedDict({'name': 'Item2', 'category': 'ImportCategory', 'price': '10', 'stock': '10', 'barcode': None}) at number 2>]
+Error: 'NullableCharWidget' object has no attribute 'empty_values'
+Base Errors: []
+[]
+[(1, [<Error: AttributeError("'NullableCharWidget' object has no attribute 'empty_values'") at row OrderedDict({'name': 'panadol', 'category': 'ImportCategory', 'price': '15.00', 'stock': 70, 'barcode': None}) at number 1>])]

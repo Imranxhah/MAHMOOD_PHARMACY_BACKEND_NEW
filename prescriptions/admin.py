@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.db import models
 from .models import Prescription
 from branches.models import Branch
 
@@ -55,6 +56,9 @@ class CreatedAtFilter(admin.SimpleListFilter):
 
 @admin.register(Prescription)
 class PrescriptionAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': admin.widgets.AdminTextareaWidget(attrs={'rows': 2, 'style': 'height: auto; width: 100%;'})},
+    }
     list_display = ('id', 'user', 'branch', 'status', 'created_at', 'image_preview')
     def get_list_filter(self, request):
         if request.user.is_superuser:
@@ -68,7 +72,7 @@ class PrescriptionAdmin(admin.ModelAdmin):
         if request.user.branch:
             return qs.filter(branch=request.user.branch)
         return qs
-    search_fields = ('user__email', 'id')
+    search_fields = ('user__email', 'id', 'note')
     readonly_fields = ('created_at',)
     list_editable = ('status',)
 
@@ -85,5 +89,52 @@ class PrescriptionAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser and request.user.branch:
-            return self.readonly_fields + ('branch',)
-        return self.readonly_fields
+            return self.readonly_fields + ('branch', 'action_buttons')
+        return self.readonly_fields + ('action_buttons',)
+
+    def action_buttons(self, obj):
+        if not obj or not obj.id:
+            return "Save first"
+        from django.urls import reverse
+        from django.utils.html import format_html
+        
+        order_url = reverse('admin:orders_order_add')
+        
+        buttons = []
+        
+        # Common button style
+        btn_style = (
+            "display: inline-block; "
+            "padding: 10px 15px; "
+            "border-radius: 5px; "
+            "text-decoration: none; "
+            "font-weight: bold; "
+            "color: white; "
+            "text-align: center; "
+            "min-width: 200px; "
+            "width: auto; "
+            "margin-right: 15px; "
+        )
+        
+        # Create Order Button
+        buttons.append(
+            '<a style="{} background-color: #28a745;" href="{}?prescription_id={}">Create Order</a>'.format(
+                btn_style, order_url, obj.id
+            )
+        )
+        
+        # Open Prescription Button
+        if obj.image:
+            buttons.append(
+                '<a style="{} background-color: #17a2b8;" href="{}" target="_blank">Open Prescription</a>'.format(
+                    btn_style, obj.image.url
+                )
+            )
+            
+        return format_html(
+            '<div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">{}</div>', 
+            format_html(' '.join(buttons))
+        )
+    
+    action_buttons.short_description = "Actions"
+    action_buttons.allow_tags = True

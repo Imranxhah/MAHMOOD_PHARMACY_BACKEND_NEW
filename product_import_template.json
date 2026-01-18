@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Panadol Extra",
+        "category": "Tablets",
+        "price": 15.0,
+        "stock": 500,
+        "description": "For tough pain",
+        "is_active": 1,
+        "generic_name": "Paracetamol + Caffeine",
+        "manufacturer": "GSK",
+        "strips_in_pack": 20,
+        "tablets_in_strip": 10,
+        "pack_price": 300.0,
+        "strip_price": 15.0
+    },
+    {
+        "name": "Brufen Syrup",
+        "category": "Syrups",
+        "price": 120.0,
+        "stock": 100,
+        "description": "Anti-inflammatory syrup for kids",
+        "is_active": 1,
+        "generic_name": "Ibuprofen",
+        "manufacturer": "Abbott",
+        "strips_in_pack": null,
+        "tablets_in_strip": null,
+        "pack_price": null,
+        "strip_price": null
+    },
+    {
+        "name": "Augmentin 1g",
+        "category": "Tablets",
+        "price": 60.0,
+        "stock": 200,
+        "description": "Broad spectrum antibiotic",
+        "is_active": 1,
+        "generic_name": "Co-amoxiclav",
+        "manufacturer": "GSK",
+        "strips_in_pack": 10,
+        "tablets_in_strip": 6,
+        "pack_price": 360.0,
+        "strip_price": 60.0
+    },
+    {
+        "name": "Flagyl 400mg",
+        "category": "Tablets",
+        "price": 8.0,
+        "stock": 300,
+        "description": "Antibiotic for infections",
+        "is_active": 1,
+        "generic_name": "Metronidazole",
+        "manufacturer": "Sanofi",
+        "strips_in_pack": 20,
+        "tablets_in_strip": 10,
+        "pack_price": 160.0,
+        "strip_price": 8.0
+    },
+    {
+        "name": "Disprin Soluble",
+        "category": "Tablets",
+        "price": 3.0,
+        "stock": 1000,
+        "description": "Fast pain relief",
+        "is_active": 1,
+        "generic_name": "Aspirin",
+        "manufacturer": "Reckitt Benckiser",
+        "strips_in_pack": 100,
+        "tablets_in_strip": 10,
+        "pack_price": 300.0,
+        "strip_price": 30.0
+    }
+]

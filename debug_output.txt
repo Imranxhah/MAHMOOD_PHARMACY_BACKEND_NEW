@@ -1,0 +1,8 @@
+--- Tables in DB ---
+Found 27 tables.
+
+--- Searching for FKs to 'orders_order' ---
+[FOUND] Table 'orders_orderitem' -> 'orders_order'. On Delete: NO ACTION
+[FOUND] Table 'notifications_notification' -> 'orders_order'. On Delete: NO ACTION
+
+--- Searching for FKs to 'orders_orderitem' ---

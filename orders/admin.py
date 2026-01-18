@@ -5,6 +5,23 @@ class OrderItemInline(admin.StackedInline):
     model = OrderItem
     autocomplete_fields = ['product']
     extra = 1
+    readonly_fields = ['product_image_preview']
+
+    def product_image_preview(self, obj):
+        if obj.product and obj.product.image:
+            from django.utils.html import mark_safe
+            return mark_safe(f'<img src="{obj.product.image.url}" class="admin-product-image" />')
+        return "No Image"
+    product_image_preview.short_description = "Product Image"
+
+    fields = ('product', 'product_image_preview', 'unit_type', 'quantity', 'price_at_purchase', 'is_manual_price')
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        from django import forms
+        formset.form.base_fields['is_manual_price'].widget = forms.HiddenInput()
+        formset.form.base_fields['price_at_purchase'].widget = forms.HiddenInput()
+        return formset
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -29,6 +46,22 @@ class OrderAdmin(admin.ModelAdmin):
     order_at.short_description = 'Order At'
     order_at.admin_order_field = 'created_at'
 
+    def get_changeform_initial_data(self, request):
+        initial = super().get_changeform_initial_data(request)
+        prescription_id = request.GET.get('prescription_id')
+        if prescription_id:
+            try:
+                from prescriptions.models import Prescription
+                prescription = Prescription.objects.get(id=prescription_id)
+                initial['user'] = prescription.user
+                initial['branch'] = prescription.branch
+                initial['shipping_address'] = prescription.address
+                initial['contact_number'] = prescription.contact_number
+                # Using 'notes' as generic name or description if helpful? No, user asked for specific fields.
+            except Prescription.DoesNotExist:
+                pass
+        return initial
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         # 1. Superusers see everything
@@ -41,6 +74,14 @@ class OrderAdmin(admin.ModelAdmin):
         
         # 3. If a manager has NO branch assigned, show nothing (Safety fallback)
         return qs.none()
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        # For new orders, trigger a second save after items are added
+        # to ensure the "Order Placed" notification signal with items is fired.
+        if not change:
+            form.instance.refresh_from_db()  # Ensure we have the updated total_amount from signals
+            form.instance.save()
 
 class StatusFilter(admin.SimpleListFilter):
     title = 'Filter by Order Status'

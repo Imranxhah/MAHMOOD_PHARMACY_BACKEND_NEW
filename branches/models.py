@@ -1,4 +1,5 @@
 from django.db import models
+from config.utils import compress_image
 
 class Branch(models.Model):
     name = models.CharField(max_length=255)
@@ -15,3 +16,15 @@ class Branch(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            try:
+                old = Branch.objects.get(pk=self.pk)
+                if old.image != self.image:
+                    compress_image(self.image)
+            except Branch.DoesNotExist:
+                pass
+        else:
+            compress_image(self.image)
+        super().save(*args, **kwargs)

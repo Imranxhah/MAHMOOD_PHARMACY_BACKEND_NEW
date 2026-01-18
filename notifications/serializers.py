@@ -2,8 +2,16 @@ from rest_framework import serializers
 from .models import Notification
 
 class NotificationSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    data = serializers.SerializerMethodField()
 
     class Meta:
         model = Notification
-        fields = ['id', 'title', 'body', 'is_read', 'created_at']
+        fields = ['id', 'title', 'body', 'is_read', 'created_at', 'data']
+
+    def get_data(self, obj):
+        if obj.order:
+            return {
+                "type": "order",
+                "order_id": obj.order.id
+            }
+        return {}

@@ -182,9 +182,10 @@ img[src*="logo"],
 }
 
 /* Row Hover Effect */
+/* Row Hover Effect */
 #result_list tbody tr:hover {
     background-color: #fafafa !important;
-    transform: scale(1.001);
+    /* transform: scale(1.001); - REMOVED to fix stacking context for popups */
     /* Subtle visual trigger */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     z-index: 10;
@@ -418,6 +419,84 @@ img[src*="logo"],
     }
 }
 
+/* -------------------------------------------------------------------------- */
+/*             USER REQUESTED FIXES (Product Form & Responsiveness)           */
+/* -------------------------------------------------------------------------- */
+
+/* 1. Consistent Input Heights (Desktop & Mobile) */
+/* Force all text-like inputs, selects, and buttons to have the same visual height */
+#content-main form input[type="text"],
+#content-main form input[type="number"],
+#content-main form input[type="email"],
+#content-main form input[type="password"],
+#content-main form .btn,
+#content-main form .related-widget-wrapper>a {
+    height: 45px !important;
+    /* Standard control height */
+    line-height: normal !important;
+    /* Reset line-height to allow flex centering */
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    /* Center text in buttons */
+    min-height: 45px !important;
+    /* Enforcement */
+}
+
+/* 2. Description Textarea - Compact (3 lines only) */
+/* Applies to both mobile and desktop to prevent huge boxes */
+#content-main form textarea,
+#id_description,
+.vLargeTextField {
+    height: auto !important;
+    min-height: 80px !important;
+    /* Approx 3 lines of text */
+    max-height: 80px !important;
+    /* STRICT LIMIT as requested "not more" */
+    resize: vertical !important;
+    /* Allow user to expand if they REALLY need to */
+    padding: 10px !important;
+}
+
+/* 3. Mobile Stacking Fixes (Ensure strictly applied) */
+@media (max-width: 991px) {
+
+    /* Stack form groups vertical */
+    .form-group .row {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    /* Full width labels and inputs */
+    .form-group .row>label[class*="col-"],
+    .form-group .row>div[class*="col-"] {
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-bottom: 5px !important;
+    }
+
+    /* Remove horizontal padding constraints on container so it touches edges */
+    #content-main .card-body {
+        padding: 10px !important;
+        overflow-x: hidden;
+        /* Prevent horizontal scroll */
+    }
+
+    /* Ensure standard inputs take full width on mobile */
+    #content-main form input,
+    #content-main form select,
+    #content-main form .select2-container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
 #changelist-search form,
 #toolbar form {
     display: flex;
@@ -440,13 +519,38 @@ img[src*="logo"],
         padding-right: 8px !important;
     }
 
-    /* 2. Compact Header */
+    /* 2. Compact Header & Title Stacking (Fix Overflow) */
     .content-header {
-        padding: 8px 5px !important;
+        padding: 10px 5px !important;
+    }
+
+    /* Target the flex container holding Title & Breadcrumb */
+    .content-header .d-flex {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        overflow-x: hidden !important;
     }
 
     .content-header h1 {
-        font-size: 1.25rem !important;
+        font-size: 1.4rem !important;
+        border-right: none !important;
+        /* Remove separator */
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        margin-bottom: 5px !important;
+        width: 100%;
+        white-space: normal !important;
+        /* Allow text wrap */
+        line-height: 1.2;
+    }
+
+    .content-header .breadcrumb {
+        padding-left: 0 !important;
+        margin-top: 0 !important;
+        background: transparent !important;
+        flex-wrap: wrap !important;
     }
 
     /* 3. Optimize Cards to use full width */
@@ -797,7 +901,31 @@ img[src*="logo"],
 }
 
 /* -------------------------------------------------------------------------- */
-/*             AGGRESSIVE INPUT WIDTH OVERRIDES (ID Specificity)             */
+/* -------------------------------------------------------------------------- */
+/*             ADMIN PRODUCT IMAGE PREVIEW                                   */
+/* -------------------------------------------------------------------------- */
+.admin-product-image {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    border-radius: 4px;
+    /* No hover effects */
+}
+
+/* Ensure it doesn't get cut off in tables/inlines */
+.form-row .field-product_image_preview {
+    overflow: visible !important;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .admin-product-image {
+        height: 250px;
+        width: 250px;
+        /* Larger size for mobile, still no hover */
+    }
+}
+
 /* -------------------------------------------------------------------------- */
 @media (max-width: 991px) {
 

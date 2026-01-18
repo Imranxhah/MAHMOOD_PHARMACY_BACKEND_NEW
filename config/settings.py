@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import pillow_avif # Register AVIF plugin
 
 # Load environment variables from .env file
 load_dotenv()
@@ -168,7 +169,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/day',
-        'user': '1000/day',
+        'user': '10000/day',
         'otp': '5/min',  # Rate limit for OTP requests
     }
 }
@@ -253,7 +254,7 @@ JAZZMIN_SETTINGS = {
     "show_sidebar": True,
 
     # Whether to aut expand the menu
-    "navigation_expanded": True,
+    "navigation_expanded": False,
 
     # Custom icons for the side menu, source from Font Awesome 6
     "icons": {

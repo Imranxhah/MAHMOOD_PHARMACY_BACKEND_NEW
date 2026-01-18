@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Banner, Feedback
+from .models import Banner, Feedback, AppVersion
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
@@ -19,4 +19,10 @@ class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone', 'created_at')
     search_fields = ('name', 'email', 'message')
     readonly_fields = ('created_at',)
+    ordering = ('-created_at',)
+
+@admin.register(AppVersion)
+class AppVersionAdmin(admin.ModelAdmin):
+    list_display = ('version', 'force_update', 'created_at')
+    list_filter = ('force_update',)
     ordering = ('-created_at',)

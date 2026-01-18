@@ -14,6 +14,8 @@ class CategoryAdmin(ImportExportModelAdmin):
         return obj.products.count()
     product_count.short_description = 'Products'
 
+    product_count.short_description = 'Products'
+
 from django.db.models import Sum
 
 from django.db.models import Sum
@@ -76,11 +78,9 @@ class CreatedAtFilter(admin.SimpleListFilter):
 @admin.register(Product)
 class ProductAdmin(ImportExportModelAdmin):
     resource_class = ProductResource
-    list_display = ('name', 'category', 'price', 'stock', 'times_sold', 'is_active', 'image_preview')
+    list_display = ('name', 'category', 'price', 'stock', 'times_sold', 'barcode', 'is_active', 'image_preview')
     list_filter = (CategoryFilter, IsActiveFilter, CreatedAtFilter)
-
-
-    search_fields = ('name', 'description')
+    search_fields = ('name', 'description', 'generic_name', 'manufacturer', 'barcode')
     list_editable = ('price', 'stock', 'is_active')
     list_per_page = 20
 
@@ -93,9 +93,28 @@ class ProductAdmin(ImportExportModelAdmin):
     times_sold.admin_order_field = 'times_sold_count'
     times_sold.short_description = 'Units Sold'
 
+    class Media:
+        css = {
+            'all': ('css/admin_hover.css',)
+        }
+        js = ('js/product_change_hover.js',)
+
     def image_preview(self, obj):
         if obj.image:
-            return format_html('<img src="{}" style="width: 50px; height: 50px; object-fit: cover;" />', obj.image.url)
+            return format_html(
+                '''
+                <div class="image-preview-container">
+                    <img src="{url}" style="height: 50px; width: auto; border-radius: 4px;" />
+                    
+                    <div class="image-backdrop"></div>
+                    
+                    <div class="image-popup">
+                        <img src="{url}" />
+                    </div>
+                </div>
+                ''',
+                url=obj.image.url
+            )
         return "No Image"
     image_preview.short_description = 'Image'
 

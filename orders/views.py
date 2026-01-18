@@ -123,10 +123,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
 
     def get_queryset(self):
-        user = self.request.user
-        if user.is_staff:
-            return Order.objects.all().order_by('-created_at')
-        return Order.objects.filter(user=user).order_by('-created_at')
+        return Order.objects.filter(user=self.request.user).order_by('-created_at')
 
     def create(self, request, *args, **kwargs):
         serializer = CreateOrderSerializer(data=request.data)
@@ -166,25 +163,50 @@ class OrderViewSet(viewsets.ModelViewSet):
                     for item in items_data:
                         pid = str(item['product_id'])
                         quantity = int(item['quantity'])
+                        unit_type = item.get('unit_type') or 'Unit' # Handle explicit None/Null from frontend
                         product = product_map.get(pid)
 
                         if not product:
                              raise Exception(f"Product {pid} not found")
 
-                        if product.stock < quantity:
-                            raise Exception(f"Insufficient stock for {product.name}. Available: {product.stock}")
+                        # Determine Price and Stock Deduction based on Unit Type
+                        price = 0
+                        stock_to_deduct = 0
+
+                        if unit_type == 'Pack':
+                            if product.pack_price is None or product.strips_in_pack is None:
+                                raise Exception(f"Pack information missing for {product.name}")
+                            price = product.pack_price
+                            # Stock is stored in strips for medicines
+                            stock_to_deduct = quantity * product.strips_in_pack
+                        
+                        elif unit_type == 'Strip':
+                            if product.strip_price is None:
+                                raise Exception(f"Strip price missing for {product.name}")
+                            price = product.strip_price
+                            # Stock is stored in strips
+                            stock_to_deduct = quantity
+                        
+                        else: # 'Unit' (Default)
+                            price = product.price
+                            # Stock is stored in units/strips depending on product context, 
+                            # but simpler assumption is 1 stock unit = 1 item ordered here
+                            stock_to_deduct = quantity
+
+                        if product.stock < stock_to_deduct:
+                            raise Exception(f"Insufficient stock for {product.name}. Available: {product.stock} (Required: {stock_to_deduct})")
 
                         # Deduct Stock
-                        product.stock -= quantity
+                        product.stock -= stock_to_deduct
                         product.save()
 
-                        price = product.price
                         total_amount += price * quantity
 
                         order_items_to_create.append(OrderItem(
                             order=order,
                             product=product,
                             quantity=quantity,
+                            unit_type=unit_type,
                             price_at_purchase=price
                         ))
 
@@ -192,6 +214,11 @@ class OrderViewSet(viewsets.ModelViewSet):
                     OrderItem.objects.bulk_create(order_items_to_create)
 
                     # Update Total
+                    # Add Delivery Charge
+                    delivery_charge = DeliveryCharge.objects.first()
+                    if delivery_charge:
+                         total_amount += delivery_charge.amount
+                         
                     order.total_amount = total_amount
                     order.save()
 
@@ -230,6 +257,12 @@ class OrderViewSet(viewsets.ModelViewSet):
                 return Response({"message": "Order cancelled successfully."}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def destroy(self, request, *args, **kwargs):
+        order = self.get_object()
+        if order.status != 'Cancelled':
+            return Response({"error": "Only cancelled orders can be deleted."}, status=status.HTTP_400_BAD_REQUEST)
+        return super().destroy(request, *args, **kwargs)
 
 
 class QuickOrderView(APIView):

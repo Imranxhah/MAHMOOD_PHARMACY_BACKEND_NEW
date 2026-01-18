@@ -1,0 +1,48 @@
+# Data Import Field Guide
+
+This guide details the required and optional fields for importing data into the system. You can use **CSV**, **Excel (.xlsx)**, or **JSON** formats.
+
+## 1. Category Import Setup
+The category file is simple. It uses the `name` to identify and create categories.
+
+| Field Name | Status | Description |
+| :--- | :--- | :--- |
+| **`name`** | **COMPULSORY** | The unique name of the category (e.g., "Tablets", "Syrups"). |
+
+---
+
+## 2. Product Import Setup
+The product import allows you to create new products or update stock for existing ones.
+
+### Compulsory Fields (Must be present)
+| Field Name | Description |
+| :--- | :--- |
+| **`name`** | The unique name of the product (e.g., "Panadol Extra"). Used as the ID. |
+| **`category`** | The name of the category (e.g., "Tablets"). If the category doesn't exist, the system will create it. |
+| **`price`** | The retail price of the product (e.g., `15.50`). |
+
+### Optional Fields (Can be left empty)
+| Field Name | Default (if skipped) | Description |
+| :--- | :--- | :--- |
+| `stock` | `0` | Quantity of stock. **Note:** If product exists, this value is ADDED to current stock. |
+| `is_active` | `1` (True) | Set to `1` for Active, `0` for Hidden/Inactive. |
+| `description` | Empty | Detailed text description of the product. |
+| `generic_name` | Empty | The chemical/generic name (e.g., "Paracetamol"). |
+| `manufacturer` | Empty | The manufacturer name (e.g., "GSK"). |
+| `strips_in_pack`| Empty | Number of strips inside a full pack/box. |
+| `tablets_in_strip` | Empty | Number of tablets inside a single strip. |
+| `pack_price` | Empty | Price for the whole pack. |
+| `strip_price` | Empty | Price for a single strip. |
+
+---
+
+## Important Notes
+1. **Column Headers**: The first row of your file (or keys in JSON) **MUST** match the Field Names exactly (case-sensitive).
+2. **Column Order**: The order of columns does NOT matter.
+3. **stock Logic**: 
+   - New Product: Sets initial stock.
+   - Existing Product: Adds value to existing stock.
+4. **File Formats supported**:
+   - `.csv` (Comma Separated)
+   - `.xlsx` (Excel)
+   - `.json`

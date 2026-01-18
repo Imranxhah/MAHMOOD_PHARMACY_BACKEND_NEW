@@ -48,11 +48,26 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='order_items', on_delete=models.PROTECT, limit_choices_to={'stock__gt': 0}) # Protect product from deletion if in order
     quantity = models.PositiveIntegerField(default=1)
+    UNIT_CHOICES = (
+        ('Pack', 'Pack'),
+        ('Strip', 'Strip'),
+        ('Unit', 'Unit'),
+    )
+    unit_type = models.CharField(max_length=10, choices=UNIT_CHOICES, default='Unit')
     price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2, blank=True) # Store price at time of purchase
+    is_manual_price = models.BooleanField(default=False, help_text="If checked, the backend will respect the provided price. If unchecked, it will auto-calculate based on Unit Type.")
 
     def save(self, *args, **kwargs):
-        if not self.price_at_purchase and self.product:
-            self.price_at_purchase = self.product.price
+        # Backend Authority Logic:
+        # If NOT manual (or if price is missing), force calculation from Master Data
+        if (not self.is_manual_price or self.price_at_purchase is None) and self.product:
+            if self.unit_type == 'Pack' and self.product.pack_price:
+                self.price_at_purchase = self.product.pack_price
+            elif self.unit_type == 'Strip' and self.product.strip_price:
+                 self.price_at_purchase = self.product.strip_price
+            else:
+                 self.price_at_purchase = self.product.price
+                 
         super().save(*args, **kwargs)
 
     def __str__(self):
